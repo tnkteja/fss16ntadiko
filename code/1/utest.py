@@ -17,7 +17,7 @@ For more on this kind of tool, see
 https://www.youtube.com/watch?v=nIonZ6-4nuU
 """
 from __future__ import division,print_function
-import sys,re,traceback,random
+import sys,re,traceback,random,string
 sys.dont_write_bytecode=True
 
 PASS=FAIL=0
@@ -45,44 +45,44 @@ def ok(f):
 
 #################################################
   
-def same(x):
-  return x
+# def same(x):
+#   return x
 
-def any(lst):
-  return random.choice(lst)
+# def any(lst):
+#   return random.choice(lst)
 
-def any3(lst,a=None,b=None,c=None,it = same,retries=10):
-  assert retries > 0
-  a = a or any(lst)
-  b = b or any(lst)
-  if it(a) == it(b):
-    return any3(lst,a=a,b=None,it=it,retries=retries - 1)
-  c = any(lst)
-  if it(a) == it(c) or it(b) == it(c):
-    return any3(lst,a=a,b=b,it=it,retries=retries - 1)
-  return a,b,c
+# def any3(lst,a=None,b=None,c=None,it = same,retries=10):
+#   assert retries > 0
+#   a = a or any(lst)
+#   b = b or any(lst)
+#   if it(a) == it(b):
+#     return any3(lst,a=a,b=None,it=it,retries=retries - 1)
+#   c = any(lst)
+#   if it(a) == it(c) or it(b) == it(c):
+#     return any3(lst,a=a,b=b,it=it,retries=retries - 1)
+#   return a,b,c
 
-@ok
-def _ok1():
-  "Can at least one test fail?"
-  assert 1==2, "equality failure"
+# @ok
+# def _ok1():
+#   "Can at least one test fail?"
+#   assert 1==2, "equality failure"
 
-@ok
-def _ok2():
-  "Can at least one test pass?"
-  assert 1==1, "equality failure"
+# @ok
+# def _ok2():
+#   "Can at least one test pass?"
+#   assert 1==1, "equality failure"
 
-@ok
-def _any3():
-  """There are 2600 three letter alphanet combinations.
-     So if we pick just 10, there should be no repeats."""
-  random.seed(1)
-  lst=list('abcdefghijklmnopqrstuvwxyz')
-  seen = {}
-  for x in sorted([''.join(any3(lst)) for _ in xrange(10)]):
-    seen[x] = seen.get(x,0) + 1
-  for k,v in seen.items():
-    assert v < 2
-  print("")
+# @ok
+# def _any3():
+#   """There are 2600 three letter alphanet combinations.
+#      So if we pick just 10, there should be no repeats."""
+#   random.seed(1)
+#   lst=list(string.ascii_lowercase)
+#   seen = {}
+#   for x in sorted([''.join(any3(lst)) for _ in xrange(10)]):
+#     seen[x] = seen.get(x,0) + 1
+#   for k,v in seen.items():
+#     assert v < 2
+#   print("")
  
-oks()
+# oks()
