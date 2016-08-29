@@ -87,18 +87,75 @@ Results:
 
 ##Practice
 
-1. For each of the following, can you offer a 3 line code snippet to demo the idea?
+1. 3 line code snippet demos, for source code ref [practice1.py]()
   * Classes
 
   	Answer: 
-  	```
+  	```python
+  	class newClass(object):
+  		"""docstring for newClass"""
+  		def __init__(self, arg):
+  			super(newClass, self).__init__()
+  			self.arg = arg
 
+  	print newClass(None)
   	```
   * Functions
+
+  	Answer:
+  	```python
+  	def function():
+  		"""docstring for function"""
+  		return None
+
+  	print function()	
+  	```
   * default params
+
+  	Answer:
+  	```python
+	  def defaultParams(defaultParam1=True):
+	  	"""docString for function"""
+	  	return defaultParam1
+
+	  print defaultParams()
+	```
   * variable lists args
+
+  	Answer:
+  	```python
+  	def variableListsArgs(*arr):
+  		"""docString for function"""
+  		return arr
+
+  	print isinstance(variableListsArgs(1,2,"3",None),tuple)
+  	```
+
   * variable dictionary args
+
+  	Answers:
+  	```python
+  	def variableDictionaryArgs(**dic):
+  		"""docString for function""""
+  		return dic
+
+  	print isinstance(variableDictionaryArgs(arg1="value1",arg2="value2"),dict)
+  	```
+
   * decorators
+
+	Answers:
+	```python
+	def decorator(f):
+		"""docString for function"""
+		print f.__name__,"decorated"
+		return f
+
+	@decorator
+	def func():
+		pass
+	```
+
   * exception handling
   
   	Answer:
@@ -108,10 +165,23 @@ Results:
   	except ZeroDivisionError as zde:
   		print zde
   	```
-2. Write a function that takes 2 args(Arg1 and Arg2) such that Arg 1 is a list of numbers, Arg2 is a number. Return a list of size Arg2 from Arg1 such that no duplicates are present.
+ 
+ code: [practice1.py]()
+  
+ Results:
 
+2. 
 	Answer:
 	```python
+	import random
+	from collections import Counter
+
 	def func(arg1,arg2):
 		return list(set(arg1))[:arg2]
+
+	arg1=random.sample(range(1,20)*2,10)
+	print func(random.sample(arg1, 9),4)
 	```
+code: [practice2.py]()
+	
+Results:
