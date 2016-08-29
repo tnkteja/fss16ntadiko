@@ -79,7 +79,7 @@ Results:
 
 4. What does a seed do in a random number generator?
 
-	Answer: 
+	Answer: When debugging code using radom number generators, it is often necessary that the sequence produced by the random number generators be same each time we debug.
 
 5. What happens if an assertion is false?
 
@@ -87,7 +87,8 @@ Results:
 
 ##Practice
 
-1. 3 line code snippet demos, for source code ref [practice1.py]()
+1. 3 line code snippet demos
+
   * Classes
 
   	Answer: 
@@ -166,11 +167,14 @@ Results:
   		print zde
   	```
  
- code: [practice1.py]()
+ code: [practice1.py](https://github.com/tnkteja/fss16ntadiko/blob/hw2/code/2/practice1.py)
   
  Results:
 
+ ![alt practice1.py](https://rawgit.com/tnkteja/fss16ntadiko/hw2/code/2/.images/p1.png)
+
 2. 
+
 	Answer:
 	```python
 	import random
@@ -182,6 +186,9 @@ Results:
 	arg1=random.sample(range(1,20)*2,10)
 	print func(random.sample(arg1, 9),4)
 	```
-code: [practice2.py]()
+
+	code: [practice2.py]()
 	
-Results:
+	Results:
+
+	![alt practice2.py](https://rawgit.com/tnkteja/fss16ntadiko/hw2/code/2/.images/p2.png)
