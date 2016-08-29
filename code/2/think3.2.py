@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""Think Like a Computer Scientist: Excercise 3.1
+"""Think Python : How To Like a Computer Scientist: Excercise 3.1
 
 
 	def print_lyrics():

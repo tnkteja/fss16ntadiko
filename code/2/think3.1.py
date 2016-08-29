@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""Think Like a Computer Scientist: Excercise 3.1
+"""Think Python : How to Think Like a Computer Scientist: Excercise 3.1
 
 
 	def print_lyrics():
@@ -18,8 +18,8 @@ Move the last line of this program to the top, so the function call appears befo
 """
 
 def print_lyrics():
-    print "I'm a lumberjack, and I'm okay."
-    print "I sleep all night and I work all day."
+	print "I'm a lumberjack, and I'm okay."
+	print "I sleep all night and I work all day."
 
 repeat_lyrics()
 

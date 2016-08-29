@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""Think Like A Computer Scientist: Excercise 3.4
+"""Think Python: How To Think Like A Computer Scientist: Excercise 3.4
 
 	Exercise 4  
 	A function object is a value you can assign to a variable or pass as an argument. For example, do_twice is a function that takes a function object as an argument and calls it twice:
@@ -11,9 +11,7 @@
 	    print 'spam'
 
 	do_twice(print_spam)
-	
-	Define a new function called do_four that takes a function object and a value and calls the function four times, passing the value as a parameter. There should be only two statements in the body of this function, not four.
-
+	5.Define a new function called do_four that takes a function object and a value and calls the function four times, passing the value as a parameter. There should be only two statements in the body of this function, not four.
 """
 
 def do_twice(f,v):

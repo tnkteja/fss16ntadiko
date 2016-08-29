@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""Think Like A Computer Scientist: Excercise 3.5
+"""Think Python: How To Think Like A Computer Scientist: Excercise 3.5
 
 Exercise 5  
 1. This exercise can be done using only the statements and other features we have learned so far.
