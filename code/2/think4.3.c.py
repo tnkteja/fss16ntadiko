@@ -1,6 +1,9 @@
 #!/usr/bin/python
-"""Think Like a Scientist: Excerise 4.3
+"""Think Python : How TO Think Like a Scientist: Excerise 4.3
 
+Exercise 3  
+Write an appropriately general set of functions that can draw shapes as in Figure 4.2.
+[figure](http://www.greenteapress.com/thinkpython/html/thinkpython006.png)
 """
 from __future__ import division
 import math

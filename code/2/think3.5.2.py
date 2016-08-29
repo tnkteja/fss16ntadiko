@@ -1,5 +1,5 @@
 #!/usr/bin/python
-"""Think Like A Computer Scientist: Excercise 3.5
+"""Think Python : How To Think Like A Computer Scientist: Excercise 3.5
 
 Exercise 5  
 2. Write a function that draws a similar grid with four rows and four columns.

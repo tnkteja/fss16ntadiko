@@ -1,6 +1,9 @@
 #!/usr/bin/python
-"""Think Like a Scientist: Excerise 4.3
+"""Think Python: How To Think Like a Scientist: Excerise 4.2
 
+Exercise 2  
+Write an appropriately general set of functions that can draw flowers as in Figure 4.1.
+[figures](http://www.greenteapress.com/thinkpython/html/thinkpython005.png)
 """
 from __future__ import division
 from swampy.TurtleWorld import *
