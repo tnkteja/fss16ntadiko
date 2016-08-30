@@ -187,7 +187,7 @@ Results:
 	print func(random.sample(arg1, 9),4)
 	```
 
-	code: [practice2.py]()
+	code: [practice2.py](https://github.com/tnkteja/fss16ntadiko/blob/hw2/code/2/practice1.py)
 	
 	Results:
 
