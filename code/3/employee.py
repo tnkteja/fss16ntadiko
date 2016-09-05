@@ -1,4 +1,5 @@
-import random,string
+import random,string,sys
+sys.dont_write_bytecode=True
 
 class Pretty(object):
     def __repr__(self):

@@ -1,7 +1,8 @@
 import unittest
 from PokerHand import *
 from Card import *
-
+import sys
+sys.dont_write_bytecode=True
 
 class Test_PokerHand(unittest.TestCase):
 

@@ -9,7 +9,8 @@ License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 
 from Card import *
 from collections import Counter
-
+import sys
+sys.dont_write_bytecode=True
 
 class ClassName(object):
     """docstring for ClassName"""
