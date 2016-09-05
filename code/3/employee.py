@@ -6,7 +6,7 @@ class Pretty(object):
 
 
 class Employee(Pretty):
-    """docstring for Employee"""
+    """Employee Class"""
 
     def __init__(self, name, age):
         self.name = name

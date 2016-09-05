@@ -11,7 +11,16 @@ from Card import *
 from collections import Counter
 
 
+class ClassName(object):
+    """docstring for ClassName"""
+
+        
 class PokerHand(Hand):
+    """PokerHand class"""
+
+    def __init__(self):
+        super(PokerHand, self).__init__()
+        self.ranks,self.suits = {},{}
 
     def suit_hist(self):
         """Builds a histogram of the suits that appear in the hand.
@@ -23,50 +32,54 @@ class PokerHand(Hand):
             self.suits[card.suit] = self.suits.get(card.suit, 0) + 1
 
     def rank_hist(self):
+        """Builds a histogram of the ranks that appear in the hand.
+
+        Stores the result in attribute ranks.
+        """
         self.ranks = Counter([card.rank for card in self.cards])
 
     def has_pair(self):
         """Returns True if the hand has a pair of cards with same rank, False otherwise.
         """
-        return self.has_NofaRank(2)
+        return self._has_NofaRank(2)
 
-    def has_twopair(self):
+    def has_two_pair(self):
         """Returns True if he hand has a twopair, False otherwise.
         """
-        self.rank_hist()
-        pairs = 0
-        for v in self.ranks.values():
-            if pairs == 2:
-                return True
-            if v >= 2 and pairs < 2:
-                pairs += 1
-        return False
+        if not self.ranks:
+            self.rank_hist()
+        return Counter(self.ranks.values())[2] ==2 
+      
 
-    def has_NofaRank(self, n):
-        self.rank_hist()
+    def _has_NofaRank(self, n):
+        if not self.ranks:
+            self.rank_hist()
 
         for v in self.ranks.values():
             if v >= n:
                 return True
         return False
 
-    def has_threeofakind(self):
+    def has_three_of_a_kind(self):
         """Returns True if the hand has three cards with the same rank, False otherwise.
         """
-        return self.has_NofaRank(3)
+        return self._has_NofaRank(3)
 
     def has_straight(self):
         """Returns True if the hand has five cards with ranks in sequence (aces can be high or low, so Ace-2-3-4-5 is a straight and so is 10-Jack-Queen-King-Ace, but Queen-King-Ace-2-3 is not.), otherwise False.
         """
-        self.rank_hist()
+        if not self.ranks:
+            self.rank_hist()
+
         ranks = self.ranks.keys()
-        seq = 0
+        seq = 1
         for i in xrange(1, len(ranks)):
-           seq = seq + (1 if ranks[i - 1] + 1 == ranks[i] else 0)
+           seq = (seq + 1) if ranks[i - 1] + 1 == ranks[i] else 1
         return True if seq >= 5 else False
 
-    def has_NofaSuit(self, n):
-        self.suit_hist()
+    def _has_NofaSuit(self, n):
+        if not self.suits:
+            self.suit_hist()
         for v in self.suits.values():
             if v >=n:
                 return True
@@ -77,23 +90,33 @@ class PokerHand(Hand):
 
         Note that this works correctly for hands with more than 5 cards.
         """
-        self.suit_hist()
-        return self.has_NofaSuit(5)
+        return self._has_NofaSuit(5)
 
-    def has_fullhouse(self):
+    def has_full_house(self):
         """Returns True if the hand has three cards with one rank, two cards with another, otherwise False.
+        Note: A Veener method calling self._has_NofaRank(arg)
         """
-        return self.has_NofaRank(3) and self.has_NofaRank(2)
+        return self._has_NofaRank(3) and self._has_NofaRank(2)
 
-    def has_fourofakind(self):
+
+    def has_four_of_a_kind(self):
         """Returns True if the hand has four cards with the same rank, otherwise False.
+        Note: A Veener method calling self._has_NofaRank(arg)
         """
-        return self.has_NofaRank(4)
+        return self._has_NofaRank(4)
 
-    def has_straightflush(self):
+    def has_straight_flush(self):
         """Returns True if the hand has five cards in sequence (as defined above) and with the same suit, otherwise False.
+        Note: A Veener method calling self._has_NofaRank(arg)
         """
-        return False
+        if not self.suits:
+            self.suit_hist()
+        for k,v in self.suits.iteritems():
+            if v>=5:
+               for v in Counter([ card.rank for card in self.cards if card.suit == k]).values():
+                if v is not 1:
+                    return False
+               return True
 
 class CheatDeck(Deck):
 
@@ -199,20 +222,10 @@ if __name__ == '__main__':
     # deal the cards and classify the hands
     for i in range(7):
         hand=PokerHand()
-        # deck.move_cards(hand, 7)
-        # deck.move_cards_flush(hand, 7)
-        # deck.move_cards_full_house(hand, 7)
-        # deck.move_cards_two_pair(hand, 7)
-        deck.move_cards_straight(hand, 7)
-        # hand.sort()
+        deck.move_cards_straight_flush(hand, 7)
+        #hand.sort()
         print hand
-        # print "flush", hand.has_flush()
-        # print "pair", hand.has_pair()
-        # print "twopair", hand.has_twopair()
-        # print "has_threeofakind", hand.has_threeofakind()
-        # print "has_straight", hand.has_straight()
-        # print "has_fullhouse", hand.has_fullhouse()
-        # print "has_fourofakind", hand.has_fourofakind()
-        # print "has_straightflush", hand.has_straightflush()
+        print hand.has_straight_flush()
         print ''
         quit()
+
