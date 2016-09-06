@@ -58,8 +58,12 @@ with yield
 * `__dict__`
 
 2b. Holder of all the name value pairs (attributes) for the object of class o. 
+
 2c. 
+![alt practice2.png]()
+
 2d. 
+The object of a Some class appends a value to 8 times and with some probablity, which depends on the number of elements already added and the attempt number, adds the value to random position for later onwards.
 
 #### 3. 8 Queens
 You've seen the knightstour. Can you code up the 8 queens problem in python? (https://en.wikipedia.org/wiki/Eight_queens_puzzle)
