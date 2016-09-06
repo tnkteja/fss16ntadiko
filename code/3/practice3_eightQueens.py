@@ -46,7 +46,8 @@ class board(object):
 
 
 	def __repr__(self):
-		return  33*'-'+'\n'+('\n'+33*'-'+'\n').join(['| '+' | '.join(row)+' |' for row in self.board])+'\n'+33*'-'
+		n=self.N*4+1
+		return  n*'-'+'\n'+('\n'+n*'-'+'\n').join(['| '+' | '.join(row)+' |' for row in self.board])+'\n'+n*'-'
 
 import copy,random
 def search(board,queens):
@@ -70,24 +71,17 @@ def search(board,queens):
 				sols.append(tuple(sorted(tmp+i)))
 	return [list(sol) for sol in set(sols)]
 
-b=board(7)
+b=board(8)
 import time
 start=time.time()
 x=search(b,queens=len(b.board))
 end=time.time()
-print len(x)
-print end-start
-quit()
+print "time: ",end-start
+print "Solutions:",len(x),'\n'
 
-for sol in x:
-	bb=board(len(b))
+for i,sol in enumerate(x):
+	print "#"*5+" Solution "+str(i+1)+' '+"#"*5
+	bb=board(len(b.board))
 	for pos in sol:
 		bb.place_queen(*pos)
 	print bb
-# for x,y in b.available_positions():
-# 	bb=copy.deepcopy(b)
-# 	bb.place_queen(x,y)
-# 	for xx,yy in bb.available_positions():
-# 		bbb=copy.deepcopy(bb)
-# 		bbb.place_queen(xx,yy)
-# 		print list(bbb.available_positions())
