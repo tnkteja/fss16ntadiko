@@ -1,3 +1,11 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""
+test_PokerHand
+
+
+"""
 import unittest
 from PokerHand import *
 from Card import *
@@ -17,44 +25,65 @@ class Test_PokerHand(unittest.TestCase):
         self.hand=PokerHand()
 
     def test_has_pair(self):
-        self.cheatDeck.move_cards_pair(self.hand, 7)
+        self.cheatDeck.move_cards_pair(self.hand, 5)
+        self.hand.classify()
         print self.hand
-        self.assertTrue(self.hand.has_pair())
+        print self.hand.labels
+        self.assertTrue(self.hand.has_1_pair())
 
 
     def test_has_two_pair(self):
-        self.cheatDeck.move_cards_two_pair(self.hand, 7)
+        self.cheatDeck.move_cards_two_pair(self.hand, 5)
+        self.hand.classify()
         print self.hand
-        self.assertTrue(self.hand.has_two_pair())
+        print self.hand.labels
+        self.assertTrue(self.hand.has_2_two_pair())
 
 
     def test_three_of_a_kind(self):
-        self.cheatDeck.move_cards_three_of_a_kind(self.hand, 7)
-        self.assertTrue(self.hand.has_three_of_a_kind())
+        self.cheatDeck.move_cards_three_of_a_kind(self.hand, 5)
+        self.hand.classify()
+        print self.hand
+        print self.hand.labels
+        self.assertTrue(self.hand.has_3_three_of_a_kind())
 
+    def test_straight(self):
+        self.cheatDeck.move_cards_straight(self.hand, 5)
+        self.hand.classify()
+        print self.hand
+        print self.hand.labels
+        self.assertTrue(self.hand.has_4_straight())
 
     def test_flush(self):
-        self.cheatDeck.move_cards_flush(self.hand, 7)
+        self.cheatDeck.move_cards_flush(self.hand, 5)
+        self.hand.classify()
         print self.hand
-        self.assertTrue(self.hand.has_flush())
+        print self.hand.labels
+        self.assertTrue(self.hand.has_5_flush())
 
 
     def test_full_house(self):
-        self.cheatDeck.move_cards_full_house(self.hand, 7)
+        self.cheatDeck.move_cards_full_house(self.hand, 5)
+        self.hand.classify()
         print self.hand
-        self.assertTrue(self.hand.has_full_house())
+        print self.hand.labels
+        self.assertTrue(self.hand.has_6_full_house())
 
 
     def test_four_of_a_kind(self):
-        self.cheatDeck.move_cards_four_of_a_kind(self.hand, 7)
+        self.cheatDeck.move_cards_four_of_a_kind(self.hand, 5)
+        self.hand.classify()
         print self.hand
-        self.assertTrue(self.hand.has_four_of_a_kind())
+        print self.hand.labels
+        self.assertTrue(self.hand.has_7_four_of_a_kind())
 
 
     def test_straight_flush(self):
-        self.cheatDeck.move_cards_straight_flush(self.hand, 7)
+        self.cheatDeck.move_cards_straight_flush(self.hand, 5)
+        self.hand.classify()
         print self.hand
-        self.assertTrue(self.hand.has_straight_flush())
+        print self.hand.labels
+        self.assertTrue(self.hand.has_8_straight_flush())
 
 
     def tearDown(self):
@@ -131,7 +160,7 @@ class CheatDeck(Deck):
 
     def move_cards_flush(self,hand,n):
         """Move five cards with the same suit"""
-        self.move_cards_n_duplicate_by_suit(hand, 5, 7)
+        self.move_cards_n_duplicate_by_suit(hand, 5, n)
 
     def move_cards_full_house(self,hand,n):
         """Move three cards with one rank, two cards with another"""
@@ -168,3 +197,27 @@ if __name__ == '__main__':
 	tl=unittest.TestLoader()
 	tl.sortTestMethodsUsing=None
 	unittest.main(verbosity=5)
+
+"""
+MIT License
+
+Copyright (c) 2016 Neela Krishna Teja Tadikonda
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""

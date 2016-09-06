@@ -53,8 +53,11 @@ with yield
 2a.
 *  `__init__`
 *  `__setitem__` 
+* `__getitem__`
+* `__repr__`
+* `__dict__`
 
-2b. Holder of all the name value pairs for the object of class o. 
+2b. Holder of all the name value pairs (attributes) for the object of class o. 
 2c. 
 2d. 
 
