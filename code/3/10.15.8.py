@@ -12,16 +12,6 @@ count=0
 for i in xrange(trails):
 	count+= (1 if has_duplicates([ random.randint(1,365) for i in xrange(23) ]) else 0)
 
-print count/trails
-
-def gather(*args,**argv):
-	print args
-	print argv
-
-
-gather(1,2,3,name="wvwrf",wrwr=424)
-
-dic={1:2,2:3,3:4,5:6}
-print dict(((1,2),(1,3)))
-
-
+prob = count/trails
+print "Probability %f"%(prob)
+assert prob >= 0.5
