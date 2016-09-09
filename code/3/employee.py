@@ -17,6 +17,5 @@ class Employee(Pretty):
     	return self.age < other.age
 
 
-arr=[  Employee(''.join(random.sample(string.ascii_lowercase,random.randint(1,26))), random.randint(1,26)) for i in xrange(1, random.randint(1,26))]
-print ', '.join(map(str,arr))
-print ', '.join(map(str,sorted(arr)))
+print Employee(''.join(random.sample(string.ascii_lowercase,random.randint(1,26))), random.randint(1,26)) 
+

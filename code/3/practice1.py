@@ -116,3 +116,12 @@ print list(odd_gen(1000))
 #g.2
 results('g.2')
 print ', '.join(map(str,list(xrange(1,1000,2))))
+
+#g.3
+results('g.3 **')
+def odd():
+  n=-1;
+  while n<1000:  
+      n+=2;
+      yield n
+for i in odd():   print i,
