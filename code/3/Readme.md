@@ -1,6 +1,45 @@
 #Homework3 : coding homework
 
+* 10.15.8 
 
+    Code : [10.15.8.py](https://github.com/tnkteja/fss16ntadiko/blob/hw3/code/3/10.15.8.py)
+
+    Results :
+
+    ![alt 10.15.8.py](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/10.15.8.png)
+
+* Employee Class
+    ```python
+    class Pretty(object):
+        def __repr__(self):
+            return self.__class__.__name__ + '( ' + ', '.join([str(k) + " = " + 
+                      str(self.__dict__[k]) for k in sorted(self.__dict__.keys())]) +' )'
+
+
+    class Employee(Pretty):
+        """Employee Class"""
+
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+        def __lt__(self,other):
+        	return self.age < other.age
+    ```
+
+    Code : [employee.py](https://github.com/tnkteja/fss16ntadiko/blob/hw3/code/3/employee.py)
+
+    Results :
+
+    ![alt employee.py](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/employee.png)
+
+* 18.12.6 [1-6]
+
+    Code : [PokerHand.py](https://github.com/tnkteja/fss16ntadiko/blob/hw3/code/3/PokerHand.py)
+
+    Results :
+
+    ![alt PokerHand.py](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/pokerhand.png)
 ## Review-2
 
 ### Practice
@@ -28,9 +67,81 @@ for x in countdown(10):
 print("lift off!")
 ```
 1b.
+```python
+def items(x, depth=-1):
+  if isinstance(x,(list,tuple)):
+    for y in x:
+      for z in items(y, depth+1):
+        yield z
+  else:
+    yield x
+
+def final():
+  out=[]
+  for x in items([
+                    10,
+                    [ 20,30],
+                    40,
+                    [
+                      (  50,60,70),
+                      [80,90,100],
+                      110
+                    ]
+                  ]):
+    if x > 20:
+      out+=[x]
+  return out
+  ```
 1c. 
-1d. 
-1e. 
+```python
+def items(x, depth=-1):
+  if isinstance(x,(list,tuple)):
+    for y in x:
+      for z in items(y, depth+1):
+        yield z
+  else:
+    yield x
+
+def final():
+  return [x for x in items([
+                    10,
+                    [ 20,30],
+                    40,
+                    [
+                      (  50,60,70),
+                      [80,90,100],
+                      110
+                    ]
+                  ]) if x > 20]
+```
+1d.
+
+```python
+import string
+def non_whitespace(strin):
+  return ''.join([ l for l in strin if l not in string.whitespace])
+
+print non_whitespace("sfvsf rg rG\n w wwfwrg \t")  # improve test case here
+```
+
+1e.
+
+```python
+def lines(string):
+  tmp=''
+  for ch in string: 
+    if ch == "\n":
+      yield tmp
+      tmp = ''
+    else:
+      tmp += ch 
+  if tmp:
+    yield tmp
+
+def strings(string):
+  return [ line for line in lines(string) if len(line) > 20]
+```
+
 1f. 
 ```python
 import random
@@ -42,14 +153,23 @@ for _ in range(20):
 
 print(x)
 ```
-1.g  Without `yield`
+1.g  
+
+Without `yield`
 ```python
 print xrange(1,1000,2)
 ```
 with yield
 ```python
+def odd():
+  n=-1;
+  while n<1000:  
+      n+=2;
+      yield n
 ```
+  Results:
 
+  ![alt practice1](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/practice1.png)
 2a.
 *  `__init__`
 *  `__setitem__` 
@@ -60,20 +180,25 @@ with yield
 2b. Holder of all the name value pairs (attributes) for the object of class o. 
 
 2c. 
-![alt practice2.png]()
+
+Results :
+
+![alt practice2.c.png](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/practice2.c.png)
 
 2d. 
 The object of a Some class appends a value to 8 times and with some probablity, which depends on the number of elements already added and the attempt number, adds the value to random position for later onwards.
 
-#### 3. 8 Queens
-You've seen the knightstour. Can you code up the 8 queens problem in python? (https://en.wikipedia.org/wiki/Eight_queens_puzzle)
+Results
 
-#### 4. FSM
+![alt practice2.d.png](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/practice2.d.png)
+
+3. 8 Queens
+
+4. FSM
 What is a finite state machine?
-Can you describe an fsm in python for the following problem.
-Your in a bar.
- 1. You start of sober.
- 2. If you are sober you take a drink
- 3. If You take a drink then there is a 80% of the time you get drunk and there is a 20% chance you pass out.
- 4. If you do not take a drink, there is a 50% chance you get sober.
- 5. If you pass out the machine stops
+    
+    Code : [practice4.py](https://github.com/tnkteja/fss16ntadiko/blob/hw3/code/3/practice4.py)
+
+    Results : 
+
+    ![alt practice.py](https://rawgit.com/tnkteja/fss16ntadiko/hw3/code/3/.images/practice4.png)
