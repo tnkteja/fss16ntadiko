@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-test_PokerHand
+test_1_PokerHand
 
 
 """
@@ -24,7 +24,7 @@ class Test_PokerHand(unittest.TestCase):
         self.cheatDeck.shuffle()
         self.hand=PokerHand()
 
-    def test_has_pair(self):
+    def test_1_has_pair(self):
         self.cheatDeck.move_cards_pair(self.hand, 5)
         self.hand.classify()
         print self.hand
@@ -32,7 +32,7 @@ class Test_PokerHand(unittest.TestCase):
         self.assertTrue(self.hand.has_1_pair())
 
 
-    def test_has_two_pair(self):
+    def test_2_has_two_pair(self):
         self.cheatDeck.move_cards_two_pair(self.hand, 5)
         self.hand.classify()
         print self.hand
@@ -40,21 +40,21 @@ class Test_PokerHand(unittest.TestCase):
         self.assertTrue(self.hand.has_2_two_pair())
 
 
-    def test_three_of_a_kind(self):
+    def test_3_three_of_a_kind(self):
         self.cheatDeck.move_cards_three_of_a_kind(self.hand, 5)
         self.hand.classify()
         print self.hand
         print self.hand.labels
         self.assertTrue(self.hand.has_3_three_of_a_kind())
 
-    def test_straight(self):
+    def test_4_straight(self):
         self.cheatDeck.move_cards_straight(self.hand, 5)
         self.hand.classify()
         print self.hand
         print self.hand.labels
         self.assertTrue(self.hand.has_4_straight())
 
-    def test_flush(self):
+    def test_5_flush(self):
         self.cheatDeck.move_cards_flush(self.hand, 5)
         self.hand.classify()
         print self.hand
@@ -62,7 +62,7 @@ class Test_PokerHand(unittest.TestCase):
         self.assertTrue(self.hand.has_5_flush())
 
 
-    def test_full_house(self):
+    def test_6_full_house(self):
         self.cheatDeck.move_cards_full_house(self.hand, 5)
         self.hand.classify()
         print self.hand
@@ -70,7 +70,7 @@ class Test_PokerHand(unittest.TestCase):
         self.assertTrue(self.hand.has_6_full_house())
 
 
-    def test_four_of_a_kind(self):
+    def test_7_four_of_a_kind(self):
         self.cheatDeck.move_cards_four_of_a_kind(self.hand, 5)
         self.hand.classify()
         print self.hand
@@ -78,7 +78,7 @@ class Test_PokerHand(unittest.TestCase):
         self.assertTrue(self.hand.has_7_four_of_a_kind())
 
 
-    def test_straight_flush(self):
+    def test_8_straight_flush(self):
         self.cheatDeck.move_cards_straight_flush(self.hand, 5)
         self.hand.classify()
         print self.hand
@@ -157,19 +157,23 @@ class CheatDeck(Deck):
             card=self.remove_cards_by_rank(rank, 1)[0]
             hand.add_card(card)
         self.move_cards(hand, 2)
+        hand.shuffle()
 
     def move_cards_flush(self,hand,n):
         """Move five cards with the same suit"""
         self.move_cards_n_duplicate_by_suit(hand, 5, n)
+        self.move_cards(hand,-5)
 
     def move_cards_full_house(self,hand,n):
         """Move three cards with one rank, two cards with another"""
         self.move_cards_m_n_duplicates_by_rank(hand, 1, 3, 3)
-        self.move_cards_m_n_duplicates_by_rank(hand, 1, 2, 4)
+        self.move_cards_m_n_duplicates_by_rank(hand, 1, 2, n-3)
+        hand.shuffle()
 
     def move_cards_four_of_a_kind(self,hand,n):
         """Move four cards with the same rank"""
         self.move_cards_m_n_duplicates_by_rank(hand, 1, 4, n)
+        hand.shuffle()
 
     def move_cards_straight_flush(self,hand,n):
         """Move five cards in sequence (as defined above) and with the same suit"""

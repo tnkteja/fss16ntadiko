@@ -73,13 +73,20 @@ class PokerHand(Hand):
         if not self.ranks:
             self.rank_hist()
 
-        ranks = self.ranks.keys()
+        ranks = sorted(self.ranks.keys())
         if len(ranks)<5:
             return False
         seq = 1
         for i in xrange(1, len(ranks)):
-           seq = (seq + 1) if ranks[i - 1] + 1 == ranks[i] else 1
-        return True if seq >= 5 else False
+            if ranks[i - 1] + 1 == ranks[i] and seq < 5:
+                seq += 1
+            elif seq is 5:
+                return True
+            else:
+                seq = 1
+        if seq == 5:
+            return True
+        return False
 
     def _has_NofaSuit(self, n):
         if not self.suits:
@@ -100,16 +107,23 @@ class PokerHand(Hand):
         """Returns True if the hand has three cards with one rank, two cards with another, otherwise False.
         Note: A Veener method calling self._has_NofaRank(arg)
         """
-        twokind,threekind=False,False
-        for k,v in self.ranks.iteritems():
-            if v == 2:
-                twokind=True
-            if v== 3:
+        if not self.ranks:
+            self.rank_hist()
+        ranksfre=self.ranks.values()
+        threekind=False
+        for i,v in enumerate(ranksfre):
+            # if v>=5:
+            #     return True
+            if v>=3:
                 threekind=True
-            if twokind and threekind:
+                del ranksfre[i]
+                break
+        if not threekind:
+            return False
+        for i,v in enumerate(ranksfre):
+            if v>=2:
                 return True
         return False
-
 
     def has_7_four_of_a_kind(self):
         """Returns True if the hand has four cards with the same rank, otherwise False.
@@ -125,10 +139,17 @@ class PokerHand(Hand):
             self.suit_hist()
         for k,v in self.suits.iteritems():
             if v>=5:
-               for v in Counter([ card.rank for card in self.cards if card.suit == k]).values():
-                if v is not 1:
-                    return False
-               return True
+               ranks=sorted([ card.rank for card in self.cards if card.suit == k])
+               seq = 1
+               for i in xrange(1, len(ranks)):
+                   if ranks[i - 1] + 1 == ranks[i] and seq < 5:
+                       seq += 1
+                   elif seq is 5:
+                       return True
+                   else:
+                       seq = 1
+               if seq == 5:
+                   return True
         return False
 
     def classify(self):
@@ -148,28 +169,20 @@ def probabilities(trails=1000,N=7):
             deck.move_cards(hand, N)
             if hand.classify():
                 labels+=hand.labels
+    print "Trials : ",trails
+    print "Hands : ",int(52/N)
     hist=Counter(labels)
     total= sum(hist.values())
     for k,v in hist.iteritems():
         hist[k]=v/total
-    print sorted([(k,v) for k,v in hist.iteritems()],key=lambda x:  x[1])
-
+    print ''
+    print '='*46
+    print "| %-10s %-15s %15s |"%("Ranks","Label","Probability")
+    print '='*46
+    for i,v in enumerate(sorted([(k,v) for k,v in hist.iteritems()],key=lambda x:  x[1])):
+        print "| %-10d %-15s %15f |"%(i+1,v[0],v[1])
+    print '-'*46
 
 if __name__ == '__main__':
-    probabilities(trails=1000,N=5)
-    quit()
-    # make a deck
-    deck=CheatDeck()
-    deck.shuffle()
-    # deal the cards and classify the hands
-    for i in range(7):
-        hand=PokerHand()
-        deck.move_cards_straight_flush(hand, 7)
-        hand.classify()
-        print hand.label
-        #hand.sort()
-        print hand
-        print hand.has_8_straight_flush()
-        print ''
-        quit()
+    probabilities(trails=1000,N=7)
 
