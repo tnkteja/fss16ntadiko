@@ -12,6 +12,6 @@
 
 | hw1| hw2 | hw3 |hw4|
 |:---:|:----:|---|---|
-|[code](), [read]()|[code](), [read]()|[code](), [read]()|[code](), [read]()|
+|[code](http://tiny.cc/ase16ntadiko-hw1-code), [read](http://tiny.cc/ase16ntadiko-hw1-read)|[code](http://bit.ly/ase16ntadiko-hw2-code), [read](http://tiny.cc/ntadiko-hw2-read)|[code](http://bit.ly/ase16ntadiko-hw3-code), [read](http://bit.ly/ase16ntadiko-hw3-read)|code, read|
 ||||
 
