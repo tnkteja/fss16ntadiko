@@ -10,8 +10,8 @@
 
 **Topics:** Overview, state of the research, automated software engineering; AI and software engineering; principles of model-based reasoning with a heavy focus on models about software engineering; search-based and evolutionary inference; representing and reasoning about models; handling uncertainty; decision making and model-based reasoning.
 
-| hw1| hw2 | hw3 |hw4|
-|:---:|:----:|---|---|
-|[code](http://tiny.cc/ase16ntadiko-hw1-code), [read](http://tiny.cc/ase16ntadiko-hw1-read)|[code](http://bit.ly/ase16ntadiko-hw2-code), [read](http://tiny.cc/ntadiko-hw2-read)|[code](http://bit.ly/ase16ntadiko-hw3-code), [read](http://bit.ly/ase16ntadiko-hw3-read)|code, read|
-||||
+hw1| hw2 | hw3 |hw4| hw5| hw6 | hw7 |hw8
+:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+[code](http://tiny.cc/ase16ntadiko-hw1-code), [read](http://tiny.cc/ase16ntadiko-hw1-read)|[code](http://bit.ly/ase16ntadiko-hw2-code), [read](http://tiny.cc/ntadiko-hw2-read)|[code](http://bit.ly/ase16ntadiko-hw3-code), [read](http://bit.ly/ase16ntadiko-hw3-read)|code, read|code, read|code, read|code, read|code, read
+|||||||
 
