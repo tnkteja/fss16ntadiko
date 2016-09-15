@@ -12,7 +12,6 @@ f1=lambda x:  x**2
 
 f2=lambda x:  (x-2)**2
 K=1000
-energy = lambda x:   f1(x)+f2(x)
 sign=lambda x:  x/abs(x)
 def neighbour(x):
 	dire=-1 if random.random() < 0.5 else 1
@@ -39,13 +38,18 @@ def neighbour(x):
 		X=x + (random.randint(1, 1000) * (1 if random.random() < 0.5 else -1))
 	return X
 
+prerunresults = [  f1(x) + f2(x) for x in random.sample(xrange(-10**5+1, 10**5-1), 100)]
+ma = max(prerunresults)
+mi = min(prerunresults)
+energy = lambda x:   (f1(x)+f2(x)-mi)/(ma-mi)
+emax = 1
 x0=random.randint(-10**5+1, 10**5-1)
 k=K
 x,e=x0,energy(x0)
 xb,eb=x0,e
 prob = lambda e,en,k:  k
 
-while 0<k<=K:
+while 0<k<=K and e < emax:
 	if k%25 ==0:
 		print(", %.4d "%(1000-k),end='')
 	#I am choosing a neighbour to jump
@@ -70,7 +74,7 @@ while 0<k<=K:
 	print('\n' if k%25 ==0 else '',end='')
 
 print()
-print(eb,xb)
+print(eb,xb,emax)
 
 print()
 print('-'*36,end='')
