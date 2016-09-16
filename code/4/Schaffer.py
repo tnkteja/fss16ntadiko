@@ -1,5 +1,10 @@
 # -*- coding: utf8 -*-
 from __future__ import print_function, division
+
+__all__= None
+__author__ = "Neela Krishna Teja Tadikonda"
+__version__ = 0.1
+
 import time,random
 
 print('#'*3+" saDemo "+'#'*25)
@@ -13,24 +18,6 @@ f1=lambda x:  x**2
 f2=lambda x:  (x-2)**2
 K=1000
 sign=lambda x:  x/abs(x)
-def neighbour(x):
-	dire=-1 if random.random() < 0.5 else 1
-	deltamax=0
-	if sign(x) ==1:
-		deltamax=(10**5)-x
-	else:
-		deltamax=x+(10**5)
-	
-	if deltamax==0:
-		delta=random.randint(1, 2*10**5)
-		if sign(x)==1:
-			return x-delta
-		else:
-			return x+delta
-	delta=random.randint(1,abs(deltamax))
-	if random.random() < 0.5:
-		return x+delta
-	return x-delta
 
 def neighbour(x):
 	X=x+(random.randint(1, 1000) * (1 if random.random() < 0.5 else -1))
