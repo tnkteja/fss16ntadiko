@@ -17,9 +17,9 @@ iii.
    2. **Information Visualisations :**
      Figures showing the overall workflow of the duplicate bug report retrieval is shown. And a summary of the textual features.
 
-     ![overallworkflow]()
+     ![overallworkflow](https://rawgit.com/tnkteja/fss16ntadiko/hw3_v1.0-alpha-hotfix0/read/3/.images/overallworkflow.png)
 
-     ![featuresinretrievalfuntion]()
+     ![featuresinretrievalfuntion](https://rawgit.com/tnkteja/fss16ntadiko/hw3_v1.0-alpha-hotfix0/read/3/.images/featuresinretrievalfunction.png)
 
    3. **Baseline Results :**
      The paper shows the extended BM25F technique results in 10-27% improvement relative to recall rate and 17-23% in mean average precision over the then existing state-of-art techniques at  the time of this paper.
