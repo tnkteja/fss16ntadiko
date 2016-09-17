@@ -2,7 +2,7 @@ i. Towards More Accurate Retrieval of Duplicate Bug Reports Chengnian Sun, Davi
 
 ii.
    1. **Master - Duplicate :** 
-     Multiple bug report on same bugs results in a situation, so the first one is called *Master* and rest are *duplicate*.
+     Multiple bug report on same bugs results in a situation, so the first one is called *Master* and rest are *duplicate*. The idea is to separate the repition of same kind of bugs.
    2. **BM25F :**
      It is an effective textual similarity function for structured document retrieval (i.e document with several fields).
 
@@ -16,6 +16,10 @@ iii.
 
    2. **Information Visualisations :**
      Figures showing the overall workflow of the duplicate bug report retrieval is shown. And a summary of the textual features.
+
+     ![overallworkflow]()
+
+     ![featuresinretrievalfuntion]()
 
    3. **Baseline Results :**
      The paper shows the extended BM25F technique results in 10-27% improvement relative to recall rate and 17-23% in mean average precision over the then existing state-of-art techniques at  the time of this paper.
