@@ -4,7 +4,7 @@ ii.
    1. **Master - Duplicate :** 
      Multiple bug report on same bugs results in a situation, so the first one is called *Master* and rest are *duplicate*. The idea is to separate the repition of same kind of bugs.
    2. **BM25F :**
-     It is an effective textual similarity function for structured document retrieval (i.e document with several fields).
+     It is an effective textual similarity function for structured document retrieval (i.e document with several fields). It is a ranking function used in information retrieval.
 
    3. **Term Frequency-Inverse document frequency :**
     It is a numerical statistic that is intened to reflect how important a word is to a document in a ccollection or corpus.
