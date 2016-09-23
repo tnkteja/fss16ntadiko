@@ -20,4 +20,4 @@
 
 ws1|ws2
 :-:|:-:
-[Ipython Notebook]()|[Ipython Notebook]()
+[Ipython Notebook](http://bit.ly/ase16ntadiko-ws1)|[Ipython Noteboohttp://bit.ly/ase16ntadiko-ws2)
