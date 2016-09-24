@@ -5,7 +5,7 @@ ii.
    1. **Support Vector Machine :** 
      It is a discrimintative model or classifier on labelled vectors, which separtes the  vectors into different classes with largest margin.
 
-     ![iv1.png]()
+     ![iv1.png](https://rawgit.com/tnkteja/fss16ntadiko/hw4_v1.0-alpha-hotfix1/read/4/.images/iv1.png)
     
    2. **Term Frequency- Inverse Document Frequency:**
      Common term-weighting scheme. Term frequency is local to document. IDF is global importance measure.
@@ -19,8 +19,14 @@ ii.
 iii.
 
    2. **Information Visualisations :**
-     Figures showing overall framework of the approach, repository organization into the bucket structure and flow diagram for the training model of the discriminative approach are shown.
-     ![iv2.png]()
+     Figures showing overall framework of the approach, repository organization into the bucket structure and flow diagram for the training model of the discriminative approach are shown. 
+     
+     ![iv2.png](https://rawgit.com/tnkteja/fss16ntadiko/hw4_v1.0-alpha-hotfix1/read/4/.images/iv2.png)
+
+     And also feature extraction.
+     
+     ![iv3.png](https://rawgit.com/tnkteja/fss16ntadiko/hw4_v1.0-alpha-hotfix1/read/4/.images/iv1.png)
+   
 
    3. **Baseline Results :**
      The baseline results show the recall rate over experiment on 3 datasets. The paper clamis that the improvement is achieved in their run, due to the 54 features and duscriminative approach they used. They show that the results putperform the previous works by 17-31%, 22-26% and 35- 43% on open office, Firefox, and Eclipse datasets respectively.
@@ -38,4 +44,4 @@ iv.
 
   2.  Although the training sets were enough for the model, date sets over more time frame would have been improved the accuracy of model prediction.
   
-  3.  
+ 
