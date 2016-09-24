@@ -14,7 +14,7 @@
 
 [hw1](https://github.com/txt/ase16/blob/master/doc/hw1.md)|[hw2](https://github.com/txt/ase16/blob/master/doc/hw2.md)|[hw3](https://github.com/txt/ase16/blob/master/doc/hw3.md)|[hw4](https://github.com/txt/ase16/blob/master/doc/hw4.md)|hw5|hw6| hw7 |hw8
 :-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-[code](http://tiny.cc/ase16ntadiko-hw1-code), [read](http://tiny.cc/ase16ntadiko-hw1-read)|[code](http://bit.ly/ase16ntadiko-hw2-code), [read](http://tiny.cc/ntadiko-hw2-read)|[code](http://bit.ly/ase16ntadiko-hw3-code), [read](http://bit.ly/ase16ntadiko-hw3-read)|code, read|code, read|code, read|code, read|code, read
+[code](http://tiny.cc/ase16ntadiko-hw1-code), [read](http://tiny.cc/ase16ntadiko-hw1-read)|[code](http://bit.ly/ase16ntadiko-hw2-code), [read](http://tiny.cc/ntadiko-hw2-read)|[code](http://bit.ly/ase16ntadiko-hw3-code), [read](http://bit.ly/ase16ntadiko-hw3-read)|[code](http://bit.ly/ase16ntadiko-hw4-code1), [read](http://bit.ly/ase16ntadiko-hw4-read)|code, read|code, read|code, read|code, read
 
 **Workshops**
 
