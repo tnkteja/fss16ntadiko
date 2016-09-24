@@ -25,7 +25,7 @@ iii.
 
      And also feature extraction.
      
-     ![iv3.png](https://rawgit.com/tnkteja/fss16ntadiko/hw4_v1.0-alpha-hotfix1/read/4/.images/iv1.png)
+     ![iv3.png](https://rawgit.com/tnkteja/fss16ntadiko/hw4_v1.0-alpha-hotfix1/read/4/.images/iv3.png)
    
 
    3. **Baseline Results :**
