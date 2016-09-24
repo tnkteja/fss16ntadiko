@@ -24,7 +24,7 @@ sign=lambda x:  x/abs(x)
 
 def neighbour(x):
 	X=x+(random.randint(1, 1000) * (1 if random.random() < 0.5 else -1))
-	while  -10**5 < X and X > 10**5:
+	while  -10**5 < X > 10**5:
 		X=x + (random.randint(1, 1000) * (1 if random.random() < 0.5 else -1))
 	return X
 
@@ -38,8 +38,8 @@ k=K
 x,e=x0,energy(x0)
 xb,eb=x0,e
 prob = lambda e,en,k:  k
-
-while 0<k<=K and e < emax:
+emax =-1
+while 0<k<=K and e > emax:
 	if k%25 ==0:
 		print(", %.4d "%(1000-k),end='')
 	#I am choosing a neighbour to jump
@@ -48,14 +48,14 @@ while 0<k<=K and e < emax:
 	en=energy(xn)
     #If the new energy I found is better than what I found so far, let me update
     # my best solution variables and keep them with me.
-	if en > eb:
+	if en < eb:
 		xb,eb=xn,en
 		print('!',end='')
 	#If the new energy I found is less than the last energy I found, I need to do better
 	if en < e:
 		x,e=xn,en
 		print('+' ,end='')
-	#If I did a better move and my temp is high, high prob jumping from your new solution
+	#If I didn't a better move and my temp is high, high prob jumping from your new solution
 	elif prob(e,en,k/K) > random.random():
 		x,e=xn,en
 		print('?',end='')
