@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 
-import random
+import random, time
 
 g1 = lambda x1,x2:    x1+x2 >= 2
 g2 = lambda x1,x2:    x1+x2 <= 6
@@ -37,11 +37,15 @@ mascore=max(agg)
 miscore=min(agg)
 
 score = lambda x1,x2,x3,x4,x5,x6:  f1(x1,x2,x3,x4,x5)+f2(x1,x2,x3,x4,x5,x6)
-def MaxWalkSat(threshold,maxtries=20,maxchanges=100,p=0.5):
+def MaxWalkSat(threshold,maxtries=20,maxchanges=50,p=0.5):
 	solb=None
+	out='#'*3+" mwsDemo "+'#'*20 +'\n'
+	out+='# '+time.ctime()
+	out+="# Basic Study\n"
+	out+="!!! Osyczka2\n\n"
 	for i in xrange(maxtries):
+		out+="Retry %.2d"%(i)+' : '
 		sol = randomsolution()
-		out=''
 		for j in xrange(maxchanges):
 			sol = solb or sol
 			sol=list(sol)
@@ -50,6 +54,7 @@ def MaxWalkSat(threshold,maxtries=20,maxchanges=100,p=0.5):
 				return sol
 			c = random.sample(xrange(6), random.randint(1,6))
 			randomsetting=random.choice(c)
+			out+=str(randomsetting)
 			# At some probability jump around
 			if p < random.random():
 				for k in c:
@@ -68,8 +73,12 @@ def MaxWalkSat(threshold,maxtries=20,maxchanges=100,p=0.5):
 					miscore,misol =  (s,tuple(sol)) if s < miscore else (miscore,misol)
 				solb=misol
 				out+='!'
-		print out
-	return solb,score(*solb)
+		out+='\n'
+			# If you couldn't find a better solution, retry again.
+	out+="\n Solution : "+ ','.join(map(str,solb))+", Score : "+str(miscore)
+	out+="\n\n Copyright 2016, Neela Krishna Teja Tadikonda"
+	print out
+	
 
-print MaxWalkSat(-1)
+MaxWalkSat(-1)
 
