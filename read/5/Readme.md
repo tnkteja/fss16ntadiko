@@ -24,9 +24,9 @@ iii.
    2. **Information Visualisations :**
    Some figures on the methodlogy of the paper mentions which show the preprocessing, textual and categorical comparision (shown in fig 2 as well, with various kinds of comparisions applied across the features on the document), some examples of the duplicate  bug reports drawn from the data sets
 
-   ![fig1](https://rawgit.com/tnkteja/fss16ntadiko/tree/hw5/read/5/.images/fig1.png)
+   ![fig1](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig1.png)
 
-   ![fig2](https://rawgit.com/tnkteja/fss16ntadiko/tree/hw5/read/5/.images/fig2.png)
+   ![fig2](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig2.png)
 
 
    3. **Baseline Results :**
