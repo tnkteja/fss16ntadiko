@@ -31,6 +31,9 @@ iii.
 
    3. **Baseline Results :**
 
+   ROC curve shows the results of applying KNN to various features of the bug reports.
+
+   ![fig2](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig34.png)
 
    4. **Related Work :**
 
@@ -41,8 +44,4 @@ iii.
    6. **Future Work :**
 
 iv.
-  1.  The paper could have considered the source code files associated with bug reports and used them to improve the accuracy.
-
-  2.  Although the training sets were enough for the model, date sets over more time frame would have been improved the accuracy of model prediction.
-  
-  3.  
+  1.  The duplicates in the data set is quite low, the authors  could have chosen a good data, which has sufficient number of duplicates, making the learners more tuned for after training.
