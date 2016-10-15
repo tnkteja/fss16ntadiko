@@ -1,9 +1,13 @@
 i. AA Statistical Semantic Language Model for Source Code , Tung Thanh Nguyen, Anh Tuan Nguyen, Hoan Anh Nguyen, Tien N. Nguyen, Electrical and Computer Engineering Department Iowa State University, Ames, IA 50011, USA
 
 ii.
-   1. **** 
+   1. **C4.5** 
     
-   2. ****
+    C4.5 is a decision tree algorithm; it is an extension to ID3 algorithm.  Very popular algorithm.
+
+   2. **K-NN**
+
+   k-nearest neighbors algorithm is another classifiation algorithm, used in pattern mathcing. K-NN algorithm is used for regression as well.
 
    3. **Accuracy:**
 
@@ -18,7 +22,8 @@ ii.
 iii.
 
    2. **Information Visualisations :**
-   Some figures on the methodlogy of the paper mentions which show the preprocessing, textual and categorical comparision (shown in fig 2 as well, with various kinds of comparisions applied across the features on the document)
+   Some figures on the methodlogy of the paper mentions which show the preprocessing, textual and categorical comparision (shown in fig 2 as well, with various kinds of comparisions applied across the features on the document), some examples of the duplicate  bug reports drawn from the data sets
+
    ![fig1](https://rawgit.com/tnkteja/fss16ntadiko/tree/hw5/read/5/.images/fig1.png)
 
    ![fig2](https://rawgit.com/tnkteja/fss16ntadiko/tree/hw5/read/5/.images/fig2.png)
