@@ -17,8 +17,6 @@ ii.
 
    ROC Curves are another tools to compare the classifiers. Sensitivity is the measure of tp against total actual positives.  Specificity is measure on the other hand the number of true negatives against to actual negatives. 1-specificity gives the false positives against actual negatives. ROC curves  plotted between "hit rate", "recall rate" or "power", a.k.a sensitivity against "1-specificity" a.k.a false alaram rate. 
    
-   4. ****
-
 iii.
 
    2. **Information Visualisations :**
@@ -31,11 +29,13 @@ iii.
 
    3. **Baseline Results :**
 
-   ROC curve shows the results of applying KNN to various features of the bug reports.
+   ROC curve shows the results of applying KNN to various data set of the bug reports.
 
    ![fig2](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig34.png)
 
    4. **Related Work :**
+
+   The paper shows various related works on information retrieval in software engineering, bug report deduplication, 
 
    5. **Data Sets :**
 
