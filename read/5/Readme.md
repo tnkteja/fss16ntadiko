@@ -1,4 +1,4 @@
-i. AA Statistical Semantic Language Model for Source Code , Tung Thanh Nguyen, Anh Tuan Nguyen, Hoan Anh Nguyen, Tien N. Nguyen, Electrical and Computer Engineering Department Iowa State University, Ames, IA 50011, USA
+i. A Contextual Approach towards More Accurate Duplicate Bug Report Detection Anahita Alipour  alipour1@ualberta.ca Abram Hindle  hindle1@ualberta.ca Eleni Stroulia stroulia@ualberta.ca
 
 ii.
    1. **C4.5** 
