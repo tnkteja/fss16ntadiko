@@ -16,21 +16,36 @@ class problem(Pretty):
     """
     """
 
-    def __init__(self,decisions=None,objectives=None,optimizer=None,type=None):
-        self.decisions,self.objectives,self.optimizer,self.type=decisions,objectives,optimizer,type
+    def __init__(self,decisions=None,objectives=None,optimizer=None,type=None,constraints=[]):
+        self.decisions,self.objectives,self.optimizer,self.type,self.constraints=decisions,objectives,optimizer,type,constraints
 
     def random(self,withReplacement=False):
         """random"""
-        return tuple([ decision.random() for decision in self.decisions])
+        while True:
+            newSolution=tuple([ decision.random() for decision in self.decisions])
+            if self.checkConstraints(newSolution):
+                return newSolution
+
+
+    def checkConstraints(self,solution):
+        for constraint in self.constraints:
+            if solution not in constraint:
+                return False
+        return True
+
 
     def randomSample(self,k,withReplacement=False):
         sols= [] if withReplacement else set()
         add=getattr(sols,"append" if withReplacement else "add")
         while(len(sols)<k):
-                add(tuple([ decision.random() for decision in self.decisions]))
+            newSolution = tuple([ decision.random() for decision in self.decisions])
+            if self.checkConstraints(newSolution):
+                add(newSolution)
         return sols
 
     def objectiveScores(self,solution):
+        x=tuple([ objective.score(*solution) for objective in self.objectives])
+        print x
         return tuple([ objective.score(*solution) for objective in self.objectives])
 
     def solve(self):
@@ -53,6 +68,11 @@ class decision(Pretty):
         pass
 
 class objective(Pretty):
+
+    def __init__(self):
+        pass
+
+class constraint(Pretty):
 
     def __init__(self):
         pass

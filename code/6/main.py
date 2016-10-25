@@ -14,3 +14,7 @@ for problem in [schaffer,osyczka2,kursawe]:
         problem(optimizer=optimizer()).solve()
         print '\n\n'+"-"*80+'\n\n'
 #can be  solve(), study()
+
+#schaffer(optimizer=sa()).solve()
+# osyczka2(optimizer=sa()).solve()
+# osyczka2(optimizer=mws()).solve()

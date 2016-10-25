@@ -22,3 +22,6 @@ class functionTypeObjective(objective):
 		if not value:
 			value=self.function(*args)
 		return value
+
+	def __call__(self,*args):
+		return self.score(self,*args)

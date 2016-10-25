@@ -46,7 +46,7 @@ class sa(optimizer):
         objectivesSum=[ self.objectivesSum(sample) for sample in samples]
         self.min=min(objectivesSum)
         self.max=max(objectivesSum)
-        emax=-1
+        emax=-3
         bestSolution=currentSolution=self.problem.random()
         bestEnergy=currentEnergy=self.energy(currentSolution)
         for k in xrange(K,0,-1):
@@ -95,11 +95,14 @@ class mws(optimizer):
         # for j in xrange(decision.bounds[0],decision.bounds[1]+1):
         #     pivot[i]=j
         #     yield pivot
-        for j in xrange(0,10):
-              pivot[i]=decision.bounds[0] + int(j/10*(decision.bounds[1] - decision.bounds[0]))
+        for j in xrange(0,1001):
+              pivot[i]=decision.bounds[0] + int(j/1000*(decision.bounds[1] - decision.bounds[0]))
               yield pivot
 
-    def run(self, maxtries=20, maxchanges=50, p=0.5):
+    def localSearch(self,pivot=None, decision=None):
+        pass
+
+    def run(self, maxtries=20, maxchanges=150, p=0.5):
         maxtries=maxtries or self.maxtries
         maxchanges=maxchanges or self.maxchanges
         solb=None

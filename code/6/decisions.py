@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
-"""
+"""decisions
 """
 __author__ = "ntadiko"
 
@@ -8,7 +8,7 @@ from itertools import product
 import random
 
 
-from dsl import decision
+from dsl import decision,constraint
 
 class intTypeDecision(decision):
 	"""IntTypeDecision
@@ -19,12 +19,12 @@ class intTypeDecision(decision):
 		self.picked=set()
 		
 	def random(self):
-		return random.randint(*self.bounds)
+		return random.randint(self.bounds[0],self.bounds[1]+1)
 
 	def random_without_replacing(self):
 		pick=None
 		while True:
-			pick=random.randint(*self.bounds)
+			pick=random.randint(self.bounds[0],self.bounds[1]+1)
 			if pick not in self.picked:
 				self.picked.add(pick)
 				break
@@ -45,7 +45,7 @@ class intTypeDecision(decision):
 		return newX
 
 	def __iter__(self):
-		for i in xrange(*self.bounds):
+		for i in xrange(self.bounds[0],self.bounds[1]):
 			yield i
 
 class enumTypeDecision(decision):
@@ -53,3 +53,20 @@ class enumTypeDecision(decision):
 	"""
 	def __init__(self):
 		pass
+
+class polynomialConstraint(constraint):
+	"""
+	"""
+	def __init__(self,condition=None):
+		self.condition=condition
+		self.cache={}
+
+	def __contains__(self,solution): # does the job but not a straight implementation
+		value=self.cache.get(solution,None)
+		if value == None:
+			value=self.condition(*solution)
+			self.cache[solution]=value
+		return value
+
+
+

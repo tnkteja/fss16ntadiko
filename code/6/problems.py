@@ -8,7 +8,7 @@ from math import exp,sin
 from sys import dont_write_bytecode
 
 
-from decisions import intTypeDecision
+from decisions import intTypeDecision, polynomialConstraint
 from dsl import problem
 from objectives import functionTypeObjective
 
@@ -56,7 +56,15 @@ class osyczka2(problem):
 			    functionTypeObjective(function=lambda x1,x2,x3,x4,x5,x6:  x1**2 + x2**2 + x3**2 + x4**2 + x5**2 + x6**2)
 			],
 			optimizer=optimizer,
-			type="min"
+			type="min",
+			constraints=[
+			    polynomialConstraint(condition=lambda x1,x2,x3,x4,x5,x6:  x1+x2-2>=0),
+			    polynomialConstraint(condition=lambda x1,x2,x3,x4,x5,x6:  6-x1-x2>=0),
+			    polynomialConstraint(condition=lambda x1,x2,x3,x4,x5,x6:  2-x2+x1>=0),
+			    polynomialConstraint(condition=lambda x1,x2,x3,x4,x5,x6:  2-x1+3*x2>=0),
+			    polynomialConstraint(condition=lambda x1,x2,x3,x4,x5,x6:  4-(x3-3)**2-x4>=0),
+			    polynomialConstraint(condition=lambda x1,x2,x3,x4,x5,x6:  (x5-3)**2+x6-4>=0)
+			]
 			)
 
 class kursawe(problem):
