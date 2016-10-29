@@ -1,13 +1,13 @@
-i. A Contextual Approach towards More Accurate Duplicate Bug Report Detection Anahita Alipour  alipour1@ualberta.ca Abram Hindle  hindle1@ualberta.ca Eleni Stroulia stroulia@ualberta.ca
+i. ELBlocker: Predicting blocking bugs with ensemble imbalance learning Xin Xia a, David Lo b, Emad Shihab c, Xinyu Wang a,⇑, Xiaohu Yang a
 
 ii.
-   1. **C4.5** 
+   1. **Blocking bugs** 
     
-    C4.5 is a decision tree algorithm; it is an extension to ID3 algorithm.  Very popular algorithm.
+    Bugs which are to be fixed first, so that other bugs or features can be fixed/develped without any dependencies. And take 2-3 times more time for completion incomparision to non-blocking bugs. The proportion of blocking bugs from other  bugs is less, which is known as class imbalance phenomenon.
 
-   2. **K-NN**
+   2. **Random Forest Classifier**
 
-   k-nearest neighbors algorithm is another classifiation algorithm, used in pattern mathcing. K-NN algorithm is used for regression as well.
+   Random forests is a ensemble learning  method for classification, regression using various decision trees. They out the class which can be mode of the all classes or mean of the indiviual trees. They are good for avoiding overfiiting on their data set.
 
    3. **Accuracy:**
 
@@ -19,6 +19,9 @@ ii.
    
 iii.
 
+   1. Motivational Statements:
+   The paper takes off after two research questions, which are whether  a predition model built on an ensemble of classsifiers which inturn are buiilt on subsets of the training bug reports achieve better performance compared to a model that is built sing all of the bug reports ? Another one is whether different decision boundaries or thresholds results in significantly different prediction performances?
+
    2. **Information Visualisations :**
    Some figures on the methodlogy of the paper mentions which show the preprocessing, textual and categorical comparision (shown in fig 2 as well, with various kinds of comparisions applied across the features on the document), some examples of the duplicate  bug reports drawn from the data sets
 
@@ -29,7 +32,7 @@ iii.
 
    3. **Baseline Results :**
 
-   ROC curve shows the results of applying KNN to various data set of the bug reports.
+   
 
    ![fig2](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig34.png)
 
@@ -39,7 +42,7 @@ iii.
 
    5. **Data Sets :**
 
-   The data sets used arebugs submitted for android between november 2007 and septtember 2012. The effective number of bug report after the filter of the improper bug reports is around 37200, out of which the duplicates are only 1063.
+   The data sets come from 6 big open source projects - Freedesktop, Chromium, Mozilla, OpenOffice and Eclipse, with total of 402,962 bugs.
 
    6. **Future Work :**
 
