@@ -3,7 +3,7 @@ with Segmentation and Stack-Trace Analysis
 Chu-Pan Wong, Yingfei Xiong, Hongyu Zhangy, Dan Hao, Lu Zhang, and Hong Mei
 
 ii.
-   1. **C4.5** 
+   1. **Motivating Examples** 
     
     C4.5 is a decision tree algorithm; it is an extension to ID3 algorithm.  Very popular algorithm.
 
