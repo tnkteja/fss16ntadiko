@@ -15,7 +15,7 @@ ii.
    3. **Mean Reciprocal Rank ( MRR ):**
    The MRR metric measures overall effectiveness of retrieval for a set of bug reports.
    
-   ![eq6](https://rawgit.com/tnkteja/fss16ntadiko/hw6/read/6/.images/eq6.png)
+   ![eq6](https://rawgit.com/tnkteja/fss16ntadiko/hw6/read/6/.images/eq8.png)
    
    4. **Mean Average Precision ( MAP )**
    The MAP metric provides a way to meaasure the quality of retrieved files, when there are ore than one related file retrieved for the bug report.
