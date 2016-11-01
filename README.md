@@ -18,6 +18,6 @@
 
 **Workshops**
 
-ws1|ws2|ws3
-:-:|:-:| :-:
-[Ipython Notebook](http://bit.ly/ase16ntadiko-ws1)|[Ipython Notebook](http://bit.ly/ase16ntadiko-ws2)|[Ipython Notebook](http://bit.ly/ase16ntadiko-ws3)
+ws1|ws2|ws3|ws4
+:-:|:-:| :-:|:-:
+[Ipython Notebook](http://bit.ly/ase16ntadiko-ws1)|[Ipython Notebook](http://bit.ly/ase16ntadiko-ws2)|[Ipython Notebook](http://bit.ly/ase16ntadiko-ws3)|[Ipython Notebook](http://bit.ly/ase16ntadiko-ws4)
