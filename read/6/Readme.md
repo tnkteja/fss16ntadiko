@@ -3,21 +3,24 @@ with Segmentation and Stack-Trace Analysis
 Chu-Pan Wong, Yingfei Xiong, Hongyu Zhangy, Dan Hao, Lu Zhang, and Hong Mei
 
 ii.
-   1. **C4.5** 
-    
-    C4.5 is a decision tree algorithm; it is an extension to ID3 algorithm.  Very popular algorithm.
-
-   2. **K-NN**
-
-   k-nearest neighbors algorithm is another classifiation algorithm, used in pattern mathcing. K-NN algorithm is used for regression as well.
-
-   3. **Accuracy:**
-
-   The tp + tn divided by tp+tn+fp+fn is the accurracy, which is a good measure of performance of the system. This in addition to other parameters will be usefull for the reasonable performance measure of the system.
-
-   4. **ROC curve:**
-
-   ROC Curves are another tools to compare the classifiers. Sensitivity is the measure of tp against total actual positives.  Specificity is measure on the other hand the number of true negatives against to actual negatives. 1-specificity gives the false positives against actual negatives. ROC curves  plotted between "hit rate", "recall rate" or "power", a.k.a sensitivity against "1-specificity" a.k.a false alaram rate. 
+   1. **VSM , rVSM** 
+   
+   It is an algrbraic model for representing text documents as vectors of identifiers, like index terms. Used in information retrievl, indexing and relevancy rankings. rVSM is revised Vector Space mdel which considers the length of similarity score and length score by a ength function.
+   
+   2. **Top N Rank of Files (TNRF)**
+   
+   Top N ranked files give the percentage of bugs whose related files are listed in top N ( which is set to 1,5, and 10 in our evaluation) of returned fies.
+   
+   
+   3. **Mean Reciprocal Rank ( MRR ):**
+   The MRR metric measures overall effectiveness of retrieval for a set of bug reports.
+   
+   ![eq6](https://rawgit.com/tnkteja/fss16ntadiko/hw6/read/6/.images/eq8.png)
+   
+   4. **Mean Average Precision ( MAP )**
+   The MAP metric provides a way to meaasure the quality of retrieved files, when there are ore than one related file retrieved for the bug report.
+   
+   ![eq6](https://rawgit.com/tnkteja/fss16ntadiko/hw6/read/6/.images/eq9.png)
    
 iii.
    1. **Motivating Examples**
@@ -57,4 +60,4 @@ iii.
    6. **Future Work :**
 
 iv.
-  1.  The duplicates in the data set is quite low, the authors  could have chosen a good data, which has sufficient number of duplicates, making the learners more tuned for after training.
+  1.  Some times the bugs not just from the souce code bug they are mere implementations of the technical report documents that come along during the development cycle. So when we use the technical specification reports also in the bug retrieval, even if we cannot point to the source file, we can find the relevant feature report and work our way down from there.
