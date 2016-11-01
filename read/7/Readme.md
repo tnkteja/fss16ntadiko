@@ -1,4 +1,4 @@
-i. ELBlocker: Predicting blocking bugs with ensemble imbalance learning Xin Xia a, David Lo b, Emad Shihab c, Xinyu Wang a,⇑, Xiaohu Yang a
+i. Automated prediction of bug report priority using multi-factor analysis Yuan Tian, David Lo, Xin Xia and Chengnian Sun
 
 ii.
    1. **Blocking bugs** 
@@ -10,28 +10,17 @@ ii.
   
    3. **Multi-factor Analysis:**
    Takeing into account several factor for the bug report prediction is multifactor analysis. The features can be in several dimensions like temporal, textual, author, related-report, severity, and product.
-   
-   4. **ROC curve:**
 
-   ROC Curves are another tools to compare the classifiers. Sensitivity is the measure of tp against total actual positives.  Specificity is measure on the other hand the number of true negatives against to actual negatives. 1-specificity gives the false positives against actual negatives. ROC curves  plotted between "hit rate", "recall rate" or "power", a.k.a sensitivity against "1-specificity" a.k.a false alaram rate. 
    
 iii.
 
    1. Motivational Statements:
    The paper takes off after two research questions, which are whether  a predition model built on an ensemble of classsifiers which inturn are buiilt on subsets of the training bug reports achieve better performance compared to a model that is built sing all of the bug reports ? Another one is whether different decision boundaries or thresholds results in significantly different prediction performances?
-
-   2. **Information Visualisations :**
-
-
-   3. **Baseline Results :**
-
   
    4. **Related Work :**
-
-   5. **Data Sets :**
-
+     The paper provided some study on the time needed to fix the bugs . Some statistics like average bug fixing time, bg fixing time distribution, files with highest fixing time. It also shows some work about automated approach that predicts the number of developer hours needed to fix a bug. They plan to test with ore bug reporsts and improve upon their accuracy.
 
    6. **Future Work :**
-
+   The tool is potentially regarded for the developers as recommender system to prioritize bugs to be fixed. The work is planned for integration with bugzilla.
 iv.
   1.  The duplicates in the data set is quite low, the authors  could have chosen a good data, which has sufficient number of duplicates, making the learners more tuned for after training.
