@@ -3,7 +3,7 @@ with Segmentation and Stack-Trace Analysis
 Chu-Pan Wong, Yingfei Xiong, Hongyu Zhangy, Dan Hao, Lu Zhang, and Hong Mei
 
 ii.
-   1. **Motivating Examples** 
+   1. **C4.5** 
     
     C4.5 is a decision tree algorithm; it is an extension to ID3 algorithm.  Very popular algorithm.
 
@@ -20,7 +20,10 @@ ii.
    ROC Curves are another tools to compare the classifiers. Sensitivity is the measure of tp against total actual positives.  Specificity is measure on the other hand the number of true negatives against to actual negatives. 1-specificity gives the false positives against actual negatives. ROC curves  plotted between "hit rate", "recall rate" or "power", a.k.a sensitivity against "1-specificity" a.k.a false alaram rate. 
    
 iii.
-
+   1. **Motivating Examples**
+   The paper presents two examples, one an example bug from Eclipse project, which contains information about the source of the bug,
+   but not sufficient information for use with the Information Reteieval System to identify the bug. Another exaample is about some bug reports which consists of stack trace information, which when observed is likely that a bug resides in the one of the top ten functions.
+   
    2. **Information Visualisations :**
    Some figures on the methodlogy of the paper mentions which show the preprocessing, textual and categorical comparision (shown in fig 2 as well, with various kinds of comparisions applied across the features on the document), some examples of the duplicate  bug reports drawn from the data sets
 
