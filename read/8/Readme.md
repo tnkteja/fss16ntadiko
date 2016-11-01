@@ -1,13 +1,12 @@
-i. A Contextual Approach towards More Accurate Duplicate Bug Report Detection Anahita Alipour  alipour1@ualberta.ca Abram Hindle  hindle1@ualberta.ca Eleni Stroulia stroulia@ualberta.ca
+i. Panichella, A., Dit, B., Oliveto, R., Di Penta, M., Poshyvanyk, D., & De Lucia, A. (2016, March). Parameterizing and Assembling IR-based Solutions for SE Tasks using Genetic Algorithms. In 2016 IEEE 23rd International Conference on Software Analysis, Evolution, and Reengineering (SANER) (Vol. 1, pp. 314-325). IEEE.
 
 ii.
-   1. **C4.5** 
-    
-    C4.5 is a decision tree algorithm; it is an extension to ID3 algorithm.  Very popular algorithm.
+   1. **GA - Information retrieval** 
+   It is a task independent, unsupervised method which is combination of inormation retireval and genetic algorithms. GA-IR uses on a simple GA with elitism of two individuals.
+   
+   2. **Genetic Algorithm**
 
-   2. **K-NN**
-
-   k-nearest neighbors algorithm is another classifiation algorithm, used in pattern mathcing. K-NN algorithm is used for regression as well.
+    It is stochastic optimizing method to find the optimal solution by mutating the solutions and keeping solutions which are fit using some fitness function. Final generation which is obtained as a result of the algorithm run over several genrations is considerred as optimal or close to optimal solution.
 
    3. **Accuracy:**
 
@@ -19,29 +18,19 @@ ii.
    
 iii.
 
-   2. **Information Visualisations :**
-   Some figures on the methodlogy of the paper mentions which show the preprocessing, textual and categorical comparision (shown in fig 2 as well, with various kinds of comparisions applied across the features on the document), some examples of the duplicate  bug reports drawn from the data sets
-
-   ![fig1](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig1.png)
-
-   ![fig2](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig2.png)
-
-
+   2. **Motivational Statements:**
+  
    3. **Baseline Results :**
-
-   ROC curve shows the results of applying KNN to various data set of the bug reports.
-
-   ![fig2](https://raw.githubusercontent.com/tnkteja/fss16ntadiko/hw5/read/5/.images/fig34.png)
-
+   
+   The paper recall rate for the GA-IR method on short corpus is perfect in accuracy. it acieves 2-7% higher accuracy when compared to VSm and LSI techniques. With the corpus twice the short corpus length, it achieves almost 98% accuracy. Overall it outperforms VSM and LSI algorithsms by 2-16%.
+   
    4. **Related Work :**
 
-   The paper shows various related works on information retrieval in software engineering, bug report deduplication, 
 
    5. **Data Sets :**
 
-   The data sets used arebugs submitted for android between november 2007 and septtember 2012. The effective number of bug report after the filter of the improper bug reports is around 37200, out of which the duplicates are only 1063.
 
    6. **Future Work :**
 
 iv.
-  1.  The duplicates in the data set is quite low, the authors  could have chosen a good data, which has sufficient number of duplicates, making the learners more tuned for after training.
+  1. The data set is quite low, the authors  could have chosen a good data, which has sufficient number of bug reports with various natures, making the learners more tuned for after training. Suppose data sets from arious projects been used , the results would have been much more interesting. 
