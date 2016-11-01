@@ -17,18 +17,17 @@ ii.
    ROC Curves are another tools to compare the classifiers. Sensitivity is the measure of tp against total actual positives.  Specificity is measure on the other hand the number of true negatives against to actual negatives. 1-specificity gives the false positives against actual negatives. ROC curves  plotted between "hit rate", "recall rate" or "power", a.k.a sensitivity against "1-specificity" a.k.a false alaram rate. 
    
 iii.
-
-   2. **Motivational Statements:**
   
    3. **Baseline Results :**
    
    The paper recall rate for the GA-IR method on short corpus is perfect in accuracy. it acieves 2-7% higher accuracy when compared to VSm and LSI techniques. With the corpus twice the short corpus length, it achieves almost 98% accuracy. Overall it outperforms VSM and LSI algorithsms by 2-16%.
    
    4. **Related Work :**
-
+   
+   Various methods are used to detec the duplicate bug report detection. For example REP, which is an advanced IR technique which relies  on high textual imilarity among duplicate bug reports.
 
    5. **Data Sets :**
-
+   The paper used the data sets from Eclipse project.  which had two kinds, first is termed as shrt and cotains only the bug report tiel and the second termed 2Shortlong which contains th ebug report title and description.
 
    6. **Future Work :**
 
