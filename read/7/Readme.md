@@ -22,5 +22,6 @@ iii.
 
    6. **Future Work :**
    The tool is potentially regarded for the developers as recommender system to prioritize bugs to be fixed. The work is planned for integration with bugzilla.
+
 iv.
-  1.  The duplicates in the data set is quite low, the authors  could have chosen a good data, which has sufficient number of duplicates, making the learners more tuned for after training.
+  1.  The data could be from various projects which could have improved the training efficiency and prediction as well.
