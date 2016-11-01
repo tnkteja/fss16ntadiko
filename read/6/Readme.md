@@ -60,4 +60,4 @@ iii.
    6. **Future Work :**
 
 iv.
-  1.  The duplicates in the data set is quite low, the authors  could have chosen a good data, which has sufficient number of duplicates, making the learners more tuned for after training.
+  1.  Some times the bugs not just from the souce code bug they are mere implementations of the technical report documents that come along during the development cycle. So when we use the technical specification reports also in the bug retrieval, even if we cannot point to the source file, we can find the relevant feature report and work our way down from there.
