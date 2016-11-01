@@ -45,7 +45,6 @@ class problem(Pretty):
 
     def objectiveScores(self,solution):
         x=tuple([ objective.score(*solution) for objective in self.objectives])
-        print x
         return tuple([ objective.score(*solution) for objective in self.objectives])
 
     def solve(self):

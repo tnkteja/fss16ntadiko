@@ -5,7 +5,6 @@
 __author__ = "ntadiko"
 
 
-
 from problems import schaffer,osyczka2,kursawe
 from optimizers import sa,mws
 

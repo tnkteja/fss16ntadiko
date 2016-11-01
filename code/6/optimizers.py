@@ -99,9 +99,6 @@ class mws(optimizer):
               pivot[i]=decision.bounds[0] + int(j/1000*(decision.bounds[1] - decision.bounds[0]))
               yield pivot
 
-    def localSearch(self,pivot=None, decision=None):
-        pass
-
     def run(self, maxtries=20, maxchanges=150, p=0.5):
         maxtries=maxtries or self.maxtries
         maxchanges=maxchanges or self.maxchanges
@@ -139,6 +136,9 @@ class ga(optimizer):
     """Genetic Algorithm
     """
     def __init__(self):
+        pass
+
+    def run():
         pass
 
 class de(optimizer):
