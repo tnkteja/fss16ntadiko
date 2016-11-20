@@ -11,9 +11,9 @@ from bisect import insort
 from collections import Counter
 from itertools import product
 import logging
-from sys import dont_write_bytecode
 from math import e
 from operator import lt, gt, add
+from sys import dont_write_bytecode
 
 from matplotlib import pyplot as plt
 

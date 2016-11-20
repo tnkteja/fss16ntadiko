@@ -54,3 +54,26 @@ def percentile(percentilevalue,rawvalues=None,normalisedValues=None):
 	print normalisedValues
 	cutpoints=[0.1,0.3,0.5,0.7,0.9]
 	print [ (sortedrawvalues[bisect(normalisedValues, cp)-1],bisect(normalisedValues, cp),cp)  for cp in cutpoints ]
+
+
+class bootstrap(Pretty):
+
+	def __init__(self,population1,,population2):
+		self.population1,self.population2=population1,population2
+		self.combinedPopulation=[]
+		self.combinedPopulation.extend(self.population1)
+		self.combinedPopulation.extend(self.population2)
+		self.delta=self.testStatistic(self.population1,self.population2)
+
+	def testStatistic(self, population1, population2):
+		delta=population2.mean - population1.mean
+		if population1.standardDeviation+population2.standardDeviation:
+			delta/=((population2.standardDeviation/len(population1))+(population2.standardDeviation/len(population2)))**0.5
+		return delta
+
+	def run(self, conf=0.1,repeats=10):
+		count=0
+		for _ in xrange(repeats):
+			if self.testStatistic(newpopulation1.sampleWithReplacement(),newpopulation2.sampleWithReplacement()) > self.delta:
+				count+=1
+		return count/repeats < conf

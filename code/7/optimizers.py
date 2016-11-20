@@ -65,7 +65,7 @@ class sa(optimizer):
         print('-'*36,end='')
         print()
         print("© 2016 MIT, Neela Krishna Teja Tadikonda")
-        self.result=bestSolution,self.problem.objectiveScores(bestSolution)
+        self.result=individual(self.problem, self,bestSolution,self.problem.objectiveScores(bestSolution))
 
 class sae(sa):
     def __init__(self):
@@ -125,7 +125,7 @@ class mws(optimizer):
         out+="\n Solution : "+ ','.join(map(str,solb))+", Score : "+str(self.problem.infamousSum(self.problem.objectiveScores(solb)))
         out+="\n\n Copyright 2016, Neela Krishna Teja Tadikonda"
         print(out)
-        self.result=solb,self.problem.objectiveScores(solb)
+        self.result=individual(self.problem,self,solb,self.problem.objectiveScores(solb))
 
 class mwse(mws):
     def __init__(self):

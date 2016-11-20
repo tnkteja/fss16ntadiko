@@ -85,7 +85,7 @@ class kursawe(problem):
 			],
 			objectives=[
 				functionTypeObjective(function=lambda x1,x2,x3:  -10*(exp(-0.2*(x1**2 + x2**2)**0.5)+exp(-0.2*(x2**2 + x3**2)**0.5))),
-				functionTypeObjective(function=lambda  x1,x2,x3:  sum([(abs(x)**0.8)+(5*sin(x**3)) for x in [x1,x2,x3]]))
+				functionTypeObjective(function=lambda  *x:  sum([(abs(xi)**0.8)+(5*sin(xi**3)) for xi in x]))
 			],
 			optimizer=optimizer,
 			type=lt
@@ -97,10 +97,11 @@ class fonseca(problem):
 	def __init__(self,n=4,optimizer=None):
 		super(fonseca, self).__init__(
 			decisions=[
-			    intTypeDecision(name='x'+str(i+1),bounds=(-4,4)) for i in xrange(n)  
+			    floatTypeDecision(name='x'+str(i+1),bounds=(-4,4)) for i in xrange(n)  
 			],
 			objectives=[
-			   functionTypeObjective(function=lambda *x:  1-exp(-1*sum([ operator(xi,len(x)**(-0.5))**2 for xi in x])), type=lt) for operator in [sub,add]
+			   functionTypeObjective(function=lambda *x:  1-exp(-sum([ (xi - len(x)**(-0.5))**2 for xi in x])), type=lt),
+			   functionTypeObjective(function=lambda *x:  1-exp(-sum([ (xi + len(x)**(-0.5))**2 for xi in x])), type=lt)
 			],
 			optimizer=optimizer
 			)
@@ -172,20 +173,18 @@ class dtlz5(_dtlz):
 class dtlz7(_dtlz): 
 	"""
 	"""
-	def __init__(self,  numberOfDecisions=0, numberOfObjectives=0, optimizer=None):
+	def __init__(self,  numberOfDecisions=10, numberOfObjectives=2, optimizer=None):
 
 		k=numberOfDecisions - numberOfObjectives + 1
 
-		g=lambda *x:  1+((9/k)*sum(x[k:numberOfDecisions-k]))
+		g=lambda *x:  1+((9/k)*sum(x[-k:]))
 
 		fs=[ lambda *x:  x[i] for i in xrange(numberOfObjectives-1)]
+
+		h=lambda *x: numberOfObjectives-sum([ (f(*x)/(1+g(*x)))*(1+sin(3*pi*f(*x))) for f in fs])  
 		
-		h=lambda *x: numberOfObjectives-sum([ (f(*x)/(1+k))*(1+sin(3*pi*f(*x))) for f in fs])  
-		
-		fs+=[lambda *x:  (1+g(*x))*h(*x)]
-		
-		super(dtlz1, self).__init__(
+		super(dtlz7, self).__init__(
 			numberOfDecisions=numberOfDecisions,
-			fs=fs,
+			fs=fs+[lambda *x:  (1+g(*x))*h(*x)],
 			optimizer=optimizer,
 			)
