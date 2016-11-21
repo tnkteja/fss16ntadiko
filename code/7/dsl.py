@@ -203,8 +203,11 @@ class optimizer(Pretty):
         self.problem=None
         self.name=self.__class__.__name__
 
-    def setProblem(self,problem):
+
+    def setProblem(self, problem):
         self.problem=problem
+        self.domination=self.problem.continuousDomination
+        self.fitness=self.problem.dominanceCount
 
     def preRun(self,samples=1000):
         logging.info(self.__class__.__name__,"-> preRun")
@@ -260,7 +263,6 @@ class individual(Pretty):
 
     def __rshift__(self,other):
         return self.__optimizer.domination(self.objectiveScores,other.objectiveScores)
-        
         
 class experiment(Pretty):
     def __init__(self):
