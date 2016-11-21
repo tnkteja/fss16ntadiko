@@ -146,7 +146,7 @@ class problem(Pretty):
     def plotParetoFrontier(self,paretoFrontier):
         plt.figure(0)
         print(zip(*map(lambda ind:  ind.objectiveScores,paretoFrontier)))
-        plt.plot(*(zip(*map(lambda ind:  ind.objectiveScores,paretoFrontier))+["ro"]))
+        plt.plot(*(zip(*map(lambda ind:  ind.objectiveScores,paretoFrontier))+["bs"]))
         return plt
 
     def makeReferenceSetScores(self,paretoFrontiers, limitTo=10):

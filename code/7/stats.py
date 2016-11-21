@@ -1,5 +1,6 @@
 from __future__ import division
 from bisect import bisect
+from utils import Pretty
 
 def median(population, isSorted=False):
 	population=population if isSorted else sorted(population)
@@ -58,7 +59,7 @@ def percentile(percentilevalue,rawvalues=None,normalisedValues=None):
 
 class bootstrap(Pretty):
 
-	def __init__(self,population1,,population2):
+	def __init__(self,population1,population2):
 		self.population1,self.population2=population1,population2
 		self.combinedPopulation=[]
 		self.combinedPopulation.extend(self.population1)

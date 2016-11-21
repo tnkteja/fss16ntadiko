@@ -15,10 +15,8 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 #baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(20)]
-problem=osyczka2
-p=problem(optimizer=nsga2())
+problem=kursawe
+p=problem(optimizer=mwse())
 p.solve()
-xs,ys=zip(*map(lambda ind:  ind.objectiveScores,p.result))
-plt.figure()
-plt.plot(xs,ys,"ro")
-plt.show()
+
+p.plotParetoFrontier(p.result).show()

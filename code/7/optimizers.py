@@ -72,6 +72,7 @@ class sae(sa):
         super(sae, self).__init__()
 
     def run(self,initialGeneration=None):
+        initialGeneration = initialGeneration or self.problem.randomSample(100)
         self.results=[]
         for solution in initialGeneration:
             super(sae, self).run(initialSolution=solution)
@@ -132,6 +133,7 @@ class mwse(mws):
         super(mwse, self).__init__()
 
     def run(self,initialGeneration=None):
+        initialGeneration = initialGeneration or self.problem.randomSample(100)
         self.results=[]
         for solution in initialGeneration:
             super(mwse, self).run(initialSolution=solution)
@@ -267,36 +269,38 @@ class de(optimizer):
     def extrapolationParticipantPairs(self,solution, generation):
         participants=None
         while True:
-            participants=map(lambda x:  x[0],random.sample(generation,3))
-            if solution not in participants:
+            participants=random.sample(generation,3)
+            if all([solution != ind.solution for ind in participants]):
                 break
         return participants
 
-    def extrapolate(self,solution,participants,cf,f):
+    def extrapolate(self,ind,participants,cf,f):
         X,Y,Z=participants
-        new=list(solution)
+        new=list(ind.solution)
         noneChanged=True
         while noneChanged:
-            for i,decision in enumerate(solution):
+            for i,decision in enumerate(ind.solution):
                 if random.random() < cf:
                     noneChanged=False
-                    new[i]=X[i]+f*(Y[i]-Z[i])
-                    new[i]= round(self.problem.decisions[i].limitToBounds(new[i]))
-        return tuple(new)
+                    new[i]=self.problem.decisions[i].limitToBounds(X.solution[i]+f*(Y.solution[i]-Z.solution[i]))
+        return individual(self.problem, self, tuple(new), self.problem.objectiveScores(new))
 
+    def setProblem(self,problem):
+        super(de, self).setProblem(problem)
+        self.domination=self.problem.continuousDomination
+        self.fitness=self.problem.dominanceCount
 
-    def run(self,initialGeneration=None,generations=10, np=10, f=0.75, cf=0.3, epsilon=0.01):
+    def run(self,initialGeneration=[],generations=100, np=10, f=0.5, cf=0.3, epsilon=0.01):
         self.np = 10 * len(self.problem.decisions)
-        paretoFrontier=nextGeneration=currentGeneration= [ (solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ (solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(self.np)]
+        paretoFrontier=nextGeneration=currentGeneration= [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(self.np)]
         for g in xrange(generations):
-            for i,(solution,objectiveScores) in self.selection(currentGeneration):
+            for i,ind in self.selection(currentGeneration):
 
-                participants = self.extrapolationParticipantPairs(solution, currentGeneration)
-                new = self.extrapolate(solution,participants, cf, f)
-                newObjectiveScores = self.problem.objectiveScores(new)
-                nextGeneration[i]= (new, newObjectiveScores) if self.problem.continuousDomination(newObjectiveScores, objectiveScores) else (solution, objectiveScores)
+                participants = self.extrapolationParticipantPairs(ind.solution, currentGeneration)
+                newIndividual = self.extrapolate(ind,participants, cf, f)
+                nextGeneration[i]= newIndividual if newIndividual.dominates(ind) else ind
                 # Observation : Some times continuousDomination gives one result which is not right if we consider infamous sum as the dominace criteria.
-            print("Generation ",g+1,[ individual for individual in currentGeneration ])
+            print("Generation ",g+1,[ ind for ind in currentGeneration ])
 
             # if  sum([self.score(self.problem.objectiveScores(solution)) for solution in nextGeneration])/np > (1-epsilon):
             #     break
