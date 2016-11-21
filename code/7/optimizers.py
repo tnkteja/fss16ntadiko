@@ -27,6 +27,7 @@ class sa(optimizer):
        Also add code to catch last nbest iterations in the list.
     """
     def __init__(self, *args, **kwargs):
+        super(sa,self).__init__()
         self.cache={}
 
     def energy(self,sol):
@@ -82,6 +83,7 @@ class mws(optimizer):
     """MaxWalkSat
     """
     def __init__(self):
+        super(mws,self).__init__()
         self.cache={}
         self.maxtries=20
 
@@ -143,6 +145,7 @@ class ga(optimizer):
     """Genetic Algorithm
     """
     def __init__(self):
+        super(ga,self).__init__()
         self.crossover=self.singlePointCrossover
 
     def singlePointCrossover(self,one,other,r=0.3):
@@ -261,7 +264,7 @@ class de(optimizer):
     """Diffrential Evolution
     """
     def __init__(self):
-        pass
+        super(de,self).__init__()
 
     def selection(self,*args):
         return enumerate(*args)
@@ -290,7 +293,7 @@ class de(optimizer):
         self.domination=self.problem.continuousDomination
         self.fitness=self.problem.dominanceCount
 
-    def run(self,initialGeneration=[],generations=100, np=10, f=0.5, cf=0.3, epsilon=0.01):
+    def run(self,initialGeneration=[],generations=100, np=10, f=0.75, cf=0.3, epsilon=0.01):
         self.np = 10 * len(self.problem.decisions)
         paretoFrontier=nextGeneration=currentGeneration= [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(self.np)]
         for g in xrange(generations):

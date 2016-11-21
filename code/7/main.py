@@ -10,13 +10,12 @@ from operator import lt, gt
 from optimizers import sa,sae,mwse,de, mws, ga, nsga2
 from random import seed
 
-from matplotlib import pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
-
-#baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(20)]
 problem=kursawe
-p=problem(optimizer=mwse())
-p.solve()
+p=problem(optimizer=de())
+baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(20)]
+p.solve(repeatOn=baselinepopulations)
+with open("_".join([p.name,p.optimizer.name])+".pickle","wb") as f:
+	dump(p.results,f)
 
-p.plotParetoFrontier(p.result).show()
+

@@ -15,10 +15,13 @@ from math import e
 from operator import lt, gt, add
 from sys import dont_write_bytecode
 
-from matplotlib import pyplot as plt
+try:
+    from matplotlib import pyplot as plt
+except ImportError:
+    plt=object()
 
 
-from borrowed import HyperVolume
+from borrowed.borrowed import HyperVolume
 from utils import Pretty, eucledianDistance
 from stats import median, mean
 
@@ -29,6 +32,7 @@ class problem(Pretty):
     """
 
     def __init__(self,decisions=None,objectives=None,optimizer=None,type=gt,constraints=[],optimizers=[]):
+        self.name=self.__class__.__name__
         self.decisions,self.objectives,self.optimizer,self.type,self.constraints=decisions,objectives,optimizer,type,constraints
         self.minimumInfamousSum=self.maximumInfamousSum=0
         self.minimumInfamousSum=self.maximumInfamousSum=self.infamousSum(self.objectiveScores(self.random()))
@@ -84,8 +88,8 @@ class problem(Pretty):
             oneNormalised=objective.normalise(one[i])
             otherNormalised=objective.normalise(other[i])
             #Exponential magnification of difference
-            lossOneFromOther+=-1*e**((-1 if objective.type == lt else 1)*(oneNormalised-otherNormalised)/len(self.objectives))
-            lossOtherFromOne+=-1*e**((-1 if objective.type == lt else 1)*(otherNormalised-oneNormalised)/len(self.objectives))
+            lossOneFromOther+=-1*e**((-1 if objective.type is lt else 1)*(oneNormalised-otherNormalised)/len(self.objectives))
+            lossOtherFromOne+=-1*e**((-1 if objective.type is lt else 1)*(otherNormalised-oneNormalised)/len(self.objectives))
         return lossOneFromOther < lossOtherFromOne
 
     def dominanceRank(self,individual, generation, dominates=None):
@@ -197,6 +201,7 @@ class optimizer(Pretty):
 
     def __init__(self):
         self.problem=None
+        self.name=self.__class__.__name__
 
     def setProblem(self,problem):
         self.problem=problem
@@ -247,6 +252,7 @@ class individual(Pretty):
         return self.fitness == other.fitness
 
     def dominates(self,other):
+        print(self,other)
         return self.__optimizer.domination(self.objectiveScores,other.objectiveScores)
 
     def measureFitness(self,generation):
