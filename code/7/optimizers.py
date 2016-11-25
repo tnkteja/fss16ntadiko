@@ -79,6 +79,7 @@ class sae(sa):
             super(sae, self).run(initialSolution=solution)
             self.results.append(self.result)
 
+
 class mws(optimizer):
     """MaxWalkSat
     """
@@ -178,12 +179,18 @@ class ga(optimizer):
 
     def run(self, size=100,generations=100):
         currentGeneration=[ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]
-        for g in xrange(generations):
+        g=0
+        lives=1
+        while lives > 0:
+            lives-=1
             offspring=[]
             offspring.extend([ self.mutate(self.crossover(*random.sample(currentGeneration,2))) for _ in xrange(size)])
+            lastGeneration=currentGeneration
             currentGeneration.extend(offspring)
             currentGeneration=self.elitism(currentGeneration, size)
-            print("Generation ",g+1, currentGeneration)
+            lives=self.problem.krallbstopmethod(lives,lastGeneration,currentGeneration)
+            print("Generation ",g+1,'/',g+lives, currentGeneration)
+            g+=1
         paretoFrontier=currentGeneration
         print('\n Pareto Frontier -',paretoFrontier)
         self.results=paretoFrontier
@@ -296,18 +303,23 @@ class de(optimizer):
     def run(self,initialGeneration=[],generations=100, np=10, f=0.75, cf=0.3, epsilon=0.01):
         self.np = 10 * len(self.problem.decisions)
         paretoFrontier=nextGeneration=currentGeneration= [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(self.np)]
-        for g in xrange(generations):
+        g=0
+        lives=1
+        while lives > 0:
+            lives-=1
+            lastGeneration=currentGeneration[::]
             for i,ind in self.selection(currentGeneration):
-
                 participants = self.extrapolationParticipantPairs(ind.solution, currentGeneration)
                 newIndividual = self.extrapolate(ind,participants, cf, f)
-                nextGeneration[i]= newIndividual if newIndividual.dominates(ind) else ind
+                currentGeneration[i]= newIndividual if newIndividual.dominates(ind) else ind
                 # Observation : Some times continuousDomination gives one result which is not right if we consider infamous sum as the dominace criteria.
-            print("Generation ",g+1,[ ind for ind in currentGeneration ])
+            lives=self.problem.krallbstopmethod(lives,lastGeneration,currentGeneration)
+            print("Generation ",g+1,'/',g+lives, currentGeneration)
+            g+=1
 
             # if  sum([self.score(self.problem.objectiveScores(solution)) for solution in nextGeneration])/np > (1-epsilon):
             #     break
-        print('\n Pareto Frontier -',[sol for sol in paretoFrontier ])
+        print('\n Pareto Frontier -',paretoFrontier)
         self.results=paretoFrontier
 
 

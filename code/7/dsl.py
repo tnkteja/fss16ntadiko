@@ -21,7 +21,7 @@ except ImportError:
     plt=object()
 
 
-from borrowed.borrowed import HyperVolume
+from borrowed.borrowed import HyperVolume, a12
 from utils import Pretty, eucledianDistance
 from stats import median, mean
 
@@ -167,6 +167,23 @@ class problem(Pretty):
         """
         return min([ ( sum(map(lambda xi,yi:  (yi-xi)**2, y, x))**0.5, y ) for y in Y ], key=lambda x: x[0])
 
+    """
+    Type 2 Comparision operator
+    """
+    def krallbstopmethod(self,lives,lastGeneration,currentGeneration):
+        noImprovementOnAnything=True
+        for i,objective in enumerate(self.objectives):
+            if not a12(map(lambda ind:  ind.objectiveScores[i],lastGeneration),map(lambda ind:  ind.objectiveScores[i],currentGeneration)):
+                noImprovementOnAnything=False
+                lives+=5
+        if noImprovementOnAnything:
+            lives-=1
+        return lives
+
+
+    """
+    Type 3 Comparision Operators
+    """
     def spread(self,paretoFrontierScores,referenceSetScores):
         """Spread is also known as diversity. It is calculated for a set of objectiveScores.
         """
@@ -193,7 +210,7 @@ class problem(Pretty):
         """
         referencePoint= referencePoint or [ (objective._maximumSoFar if objective.type == lt else objective._minimumSoFar) for objective in self.objectives]
         return HyperVolume(referencePoint).compute(paretoFrontier)
-        
+    
 
 class optimizer(Pretty):
     """
@@ -255,7 +272,6 @@ class individual(Pretty):
         return self.fitness == other.fitness
 
     def dominates(self,other):
-        print(self,other)
         return self.__optimizer.domination(self.objectiveScores,other.objectiveScores)
 
     def measureFitness(self,generation):

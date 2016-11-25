@@ -12,7 +12,7 @@ from random import seed
 
 
 problem=kursawe
-p=problem(optimizer=de())
+p=problem(optimizer=ga())
 baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(20)]
 p.solve(repeatOn=baselinepopulations)
 with open("_".join([p.name,p.optimizer.name])+".pickle","wb") as f:

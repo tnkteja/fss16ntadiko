@@ -25,6 +25,13 @@ We have few performance scores like Hypervolume, Intergenerational Distance, and
 
 For the design challenge, we pick the performace meassure IGD to compare the optmizers Simulated Annealng, Max Walk Sat, and DE against each other on a common problem.
 
+
+* _Type 1 Comparision Opeartor_ It is used to decide if an individual of the population is better than another individual.
+
+* _Type 2 Comparision Operator_ It is used to find if there is any improvement from the last generation to the current generation.
+
+* _Type 3 Comparision Operator_ It is used to to compare two optimizers on their performace with the problem they performed optimization on. For example Hypervolume, Spread, IGD.
+
 ## Performance Experiments
 In this report we run the optimizers - Simulated Annealing, Max Walk Sat and Differential Evolution on ...
 
