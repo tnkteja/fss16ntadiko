@@ -12,13 +12,18 @@ from random import seed
 from collections import defaultdict
 from pprint import pprint
 
-problem=kursawe
+problem=dtlz7
 p=problem()
-baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(1)]
+baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(20)]
+with open("baselinepopulations.pickle","wb") as f:
+    dump(baselinepopulations,f)
 pms=defaultdict(list)
-for optimizer in [sae(),mwse(),de()]:
+for optimizer in [sae(),mwse()]:
 	p.setOptimizer(optimizer)
 	p.solve(repeatOn=baselinepopulations)
 	pms[optimizer.name].append(map(p.lossStatitic, p.baselineGenerations,p.results))
 
-pprint(pms)
+with open("lossStatitics.pickle","wb") as f:
+	dump(pms, f)
+	pprint(pms)
+
