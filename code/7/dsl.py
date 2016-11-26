@@ -38,6 +38,9 @@ class problem(Pretty):
         self.minimumInfamousSum=self.maximumInfamousSum=self.infamousSum(self.objectiveScores(self.random()))
         self.__computationCache={}
 
+    def setOptimizer(self, optimizer):
+        self.optimizer=optimizer
+
     def random(self,withReplacement=False):
         """random"""
         while True:
@@ -139,12 +142,15 @@ class problem(Pretty):
         self.preRun()
         self.optimizer.setProblem(self)
         self.results=[]
+        self.baselineGenerations=[]
         if not repeatOn:
             self.optimizer.run()
-            self.result=self.optimizer.results
+            self.result=self.optimizer.result
+            self.results=self.optimizer.frontier
             return
         for initialPopulation in repeatOn:
             self.optimizer.run(initialGeneration=initialPopulation)
+            self.baselineGenerations.append(self.optimizer.baselineGeneration)
             self.results.append(self.optimizer.results)
 
     def plotParetoFrontier(self,paretoFrontier):
@@ -173,13 +179,13 @@ class problem(Pretty):
     def krallbstopmethod(self,lives,lastGeneration,currentGeneration):
         noImprovementOnAnything=True
         for i,objective in enumerate(self.objectives):
-            if not a12(map(lambda ind:  ind.objectiveScores[i],lastGeneration),map(lambda ind:  ind.objectiveScores[i],currentGeneration)):
+            boolean=a12(map(lambda ind:  ind.objectiveScores[i],lastGeneration),map(lambda ind:  ind.objectiveScores[i],currentGeneration))
+            if (objective.type is lt and not boolean) or (objective.type is gt and boolean): 
                 noImprovementOnAnything=False
                 lives+=5
         if noImprovementOnAnything:
             lives-=1
         return lives
-
 
     """
     Type 3 Comparision Operators
@@ -211,6 +217,9 @@ class problem(Pretty):
         referencePoint= referencePoint or [ (objective._maximumSoFar if objective.type == lt else objective._minimumSoFar) for objective in self.objectives]
         return HyperVolume(referencePoint).compute(paretoFrontier)
     
+    def lossStatitic(self, paretoFrontier, referenceSet):
+        loss=0
+        return sum([ self.continuousDomination(refInd.objectiveScores, paretoInd.objectiveScores) for refInd in referenceSet for paretoInd in paretoFrontier])
 
 class optimizer(Pretty):
     """
@@ -231,6 +240,8 @@ class optimizer(Pretty):
         scores=[]
         for sample in self.problem.randomSample(1000):
             scores.append(self.problem.objectiveScores(sample))
+
+
 
 class decision(Pretty):
 

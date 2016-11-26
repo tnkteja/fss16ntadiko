@@ -9,7 +9,7 @@ from __future__ import print_function, division
 __author__="ntadiko"
 
 from bisect import insort, bisect_left, bisect_right
-from collections import defaultdict
+from collections import defaultdict, Counter
 from sys import dont_write_bytecode, maxint
 from itertools import product, izip
 import logging
@@ -33,32 +33,48 @@ class sa(optimizer):
     def energy(self,sol):
         return (self.problem.infamousSum(self.problem.objectiveScores(sol))-self.problem.preRunMinimumInfamousSum)/(self.problem.preRunMaximumInfamousSum-self.problem.preRunMinimumInfamousSum)
 
-    def run(self,K=1000, initialSolution=None):
+    def run(self,K=10000, era=100,initialSolution=None):
         emax=3
         bestSolution=currentSolution=initialSolution or self.problem.random()
         bestEnergy=currentEnergy=self.energy(currentSolution)
+        lives=6
+        eventsCounter=Counter()
+        frontier=[]
         for k in xrange(K,0,-1):
-            if currentEnergy < emax:
-                if k%25 ==0:
-                    print(", %.4d "%(1000-k),end='')
+            #if currentEnergy < emax:
+            if lives > 0:
+                if k%era == 0:
+                    print('\n',end='')
+                    lives = 5 if eventsCounter['!'] > 0 else lives-1
+                    eventsCounter['!']=0
+                    print(", %.4d "%(K-k),end='')
+
                 newSolution=self.problem.mutate(currentSolution) # I am choosing a neighbour to jump
                 newEnergy=self.energy(newSolution) # This neighbour gives me some energy
+
                 #If the new energy I found is better than what I found so far, let me update
                 # my best solution variables and keep them with me.
                 if newEnergy > bestEnergy:
                     bestEnergy,bestSolution=newEnergy,newSolution
+                    eventsCounter['!']+=1
+                    frontier=[individual(self.problem,self,bestSolution,self.problem.objectiveScores(bestSolution))]
                     print('!',end='')
+
                 #If the new energy I found is less than the last energy I found, I need to do better
-                if newEnergy < currentEnergy:
+                elif newEnergy < currentEnergy:
                     currentEnergy,currentSolution=newEnergy,newSolution
+                    eventsCounter['+']+=1
                     print('+',end='')
                 #If I didn't a better move and my temp is high, high prob jumping from your new solution
-                elif exp((currentEnergy-newEnergy)/(k/K)) > random.random():
-                    currentSolution=newSolution
-                    print('?',end='')
+                else:
+                    frontier.append(individual(self.problem,self,newSolution,self.problem.objectiveScores(newSolution)))
+                    if exp((currentEnergy-newEnergy)/(k/K)) > random.random()*2:
+                        currentSolution=newSolution
+                        eventsCounter['?']+=1
+                        print('?',end='')
                 print('.',end='')
                 k-=1
-                print('\n' if k%25 ==0 else '',end='')
+                
         print()
         print('bestEnergy: ',bestEnergy,"bestSolution: ",bestSolution,"bestScore",str(self.problem.infamousSum(self.problem.objectiveScores(bestSolution))))
 
@@ -67,6 +83,7 @@ class sa(optimizer):
         print()
         print("© 2016 MIT, Neela Krishna Teja Tadikonda")
         self.result=individual(self.problem, self,bestSolution,self.problem.objectiveScores(bestSolution))
+        self.frontier=frontier
 
 class sae(sa):
     def __init__(self):
@@ -76,8 +93,11 @@ class sae(sa):
         initialGeneration = initialGeneration or self.problem.randomSample(100)
         self.results=[]
         for solution in initialGeneration:
-            super(sae, self).run(initialSolution=solution)
-            self.results.append(self.result)
+            lives=1
+            while lives > 0:
+                lives-=1
+                super(sae, self).run(initialSolution=solution)
+                self.results.append(self.result)
 
 
 class mws(optimizer):
@@ -97,39 +117,51 @@ class mws(optimizer):
               pivot[i]=v
               yield tuple(pivot)
 
-    def run(self, initialSolution=None,maxtries=20, maxchanges=150, p=0.5):
+    def run(self, initialSolution=None,maxtries=20, maxchanges=100, p=0.5):
         maxtries=maxtries or self.maxtries
         maxchanges=maxchanges or self.maxchanges
         solb=sol=initialSolution or self.problem.random()
         out=''
+        lives=5
+        eventsCounter=Counter()
+        frontier=[]
         for i in xrange(maxtries):
-            out+="Retry %.2d"%(i)+' : '
+            if lives <0:
+                break
+            lives = 5 if eventsCounter['!'] > 0 else lives-1
+            eventsCounter['!']=0
+            print("Retry %.2d / %d"%(i,i+lives)+' : ',end='')
             for j in xrange(maxchanges):
                 sol=list(sol)
-                if self.score(sol) > 5:
-                    self.result=solb,self.problem.objectiveScores(solb)
-                    print(out)
-                    return
+                # if self.score(sol) > 5:
+                #     self.result=solb,self.problem.objectiveScores(solb)
+                #     print(out)
+                #     return
                 randomsetting=random.choice(self.problem.decisions)
                 i=self.problem.decisions.index(randomsetting)
                 # At some probability jump around
                 if p > random.random():
                     randomsettingvalue=sol[self.problem.decisions.index(randomsetting)]
                     sol[i]=randomsetting.mutate(randomsettingvalue)
-                    out+='?'
                 # Then, at probability (1-p), fixate on one variable and try all its 
                 # values in (say) increments of (max-min)/10 (and use the value that most 
                 # improves the score function).
                 else:
                     sol=max(self.varyOn(pivot=sol,decision=(i,randomsetting)),key=lambda x:  self.score(x))
-                    out+='!'
-                solb = max(sol,solb,key=lambda x:  self.score(x))
+                if self.score(sol) > self.score(solb):
+                    solb=sol
+                    frontier=[individual(self.problem,self,solb,self.problem.objectiveScores(solb))]
+                    eventsCounter['!']+=1
+                    print('!',end='')
+                else:
+                    frontier.append(individual(self.problem,self,sol,self.problem.objectiveScores(sol)))
+                    print('.',end='')
             sol=self.problem.random()
-            out+='\n'
-        out+="\n Solution : "+ ','.join(map(str,solb))+", Score : "+str(self.problem.infamousSum(self.problem.objectiveScores(solb)))
-        out+="\n\n Copyright 2016, Neela Krishna Teja Tadikonda"
-        print(out)
+            print('\n',end='')
+        print("\n Solution : "+ ','.join(map(str,solb))+", Score : "+str(self.problem.infamousSum(self.problem.objectiveScores(solb))),end='')
+        print("\n\n Copyright 2016, Neela Krishna Teja Tadikonda")
         self.result=individual(self.problem,self,solb,self.problem.objectiveScores(solb))
+        self.frontier=frontier
 
 class mwse(mws):
     def __init__(self):
@@ -137,6 +169,7 @@ class mwse(mws):
 
     def run(self,initialGeneration=None):
         initialGeneration = initialGeneration or self.problem.randomSample(100)
+        self.baselineGeneration=[ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration]
         self.results=[]
         for solution in initialGeneration:
             super(mwse, self).run(initialSolution=solution)
@@ -181,7 +214,9 @@ class ga(optimizer):
         currentGeneration=[ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]
         g=0
         lives=1
-        while lives > 0:
+        for g in xrange(generations):
+            if lives < 0:
+                break
             lives-=1
             offspring=[]
             offspring.extend([ self.mutate(self.crossover(*random.sample(currentGeneration,2))) for _ in xrange(size)])
@@ -303,6 +338,7 @@ class de(optimizer):
     def run(self,initialGeneration=[],generations=100, np=10, f=0.75, cf=0.3, epsilon=0.01):
         self.np = 10 * len(self.problem.decisions)
         paretoFrontier=nextGeneration=currentGeneration= [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(self.np)]
+        self.baselineGeneration=currentGeneration[::]
         g=0
         lives=1
         while lives > 0:
