@@ -33,7 +33,7 @@ For the design challenge, we pick the performace meassure IGD to compare the opt
 * _Type 3 Comparision Operator_ It is used to to compare two optimizers on their performace with the problem they performed optimization on. For example Hypervolume, Spread, IGD.
 
 ## Performance Experiments
-In this report we run the optimizers - Simulated Annealing, Max Walk Sat and Differential Evolution on ...
+In this experiments we run the optimizers - Simulated Annealing, Max Walk Sat and Differential Evolution ..
 
 ## The Conclusions
 
@@ -46,6 +46,14 @@ ___References:___
 1.  _S. Kirkpatrick and C. D. Gelatt and M. P. Vecchi Optimization by Simulated Annealing, Science, Number 4598, 13 May 1983, volume 220, 4598, pages 671680,1983._
 
 2.  _Kautz, H., Selman, B., & Jiang, Y. (n.d.). A General Stochastic Approach to Solving Problems with Hard and Soft Constraints, 0, 1–14._
+
+3. _Deb, K., Thiele, L., Laumanns, M., Zitzler, E., Abraham, A., Jain, L., & Goldberg, R. (2005). Scalable test problems for evolutionary multiobjective optimization. Evolutionary Multiobjective, (1990), 1–27. http://doi.org/10.1007/1-84628-137-7_
+
+4. https://github.com/txt/mase/blob/master/lessthan.md
+
+5. https://github.com/txt/ase16/blob/master/doc/stats.md
+
+6. Andrea Arcuri and Lionel Briand. 2011. A practical guide for using statistical tests to assess randomized algorithms in software engineering. In Proceedings of the 33rd International Conference on Software Engineering (ICSE '11). ACM, New York, NY, USA, 1-10. DOI=http://dx.doi.org/10.1145/1985793.1985795
 
 ## Appendices
 ### Grammar and Small-Scale Presentation Issues
