@@ -91,6 +91,7 @@ class sae(sa):
 
     def run(self,initialGeneration=None):
         initialGeneration = initialGeneration or self.problem.randomSample(100)
+        self.baselineGeneration=[ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration]
         self.results=[]
         for solution in initialGeneration:
             lives=1

@@ -16,7 +16,7 @@ problem=kursawe
 p=problem()
 baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(1)]
 pms=defaultdict(list)
-for optimizer in [mwse()]:
+for optimizer in [sae(),mwse(),de()]:
 	p.setOptimizer(optimizer)
 	p.solve(repeatOn=baselinepopulations)
 	pms[optimizer.name].append(map(p.lossStatitic, p.baselineGenerations,p.results))
