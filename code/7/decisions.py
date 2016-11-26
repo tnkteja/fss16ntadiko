@@ -72,7 +72,7 @@ class floatTypeDecision(decision):
 	def __init__(self,name=None,bounds=None):
 		self.name=name
 		self.bounds=bounds
-		self.picked=set()
+		self._picked=set()
 		
 	def random(self):
 		return random.uniform(*self.bounds)
@@ -93,7 +93,11 @@ class floatTypeDecision(decision):
 		return self.bounds[0] <= x <= self.bounds[1]
 
 	def limitToBounds(self,x):
-		return max(self.bounds[0],min(x,self.bounds[1]))
+		if x < self.bounds[0]:
+			return self.bounds[1]-(x-self.bounds[0])
+		if x > self.bounds[1]:
+			return self.bounds[0]+(x-self.bounds[1])
+		return x
 
 	def mutate(self,x):
 		newX=x

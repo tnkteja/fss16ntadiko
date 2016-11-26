@@ -145,8 +145,7 @@ class problem(Pretty):
         self.baselineGenerations=[]
         if not repeatOn:
             self.optimizer.run()
-            self.result=self.optimizer.result
-            self.results=self.optimizer.frontier
+            self.result=self.optimizer.results
             return
         for initialPopulation in repeatOn:
             self.optimizer.run(initialGeneration=initialPopulation)
@@ -305,3 +304,10 @@ class population(Pretty):
         self.averageDeviation = sum(map(lambda x:  abs(x-self.mean),self.population))/len(self.population)
         self.variance = sum(map(lambda x:  (x-self.mean)**2,self.population))/len(self.population)
         self.standardDeviaton=(self.variance)**0.5
+
+    def mean():
+        return self.sum/len(self.sortedpopulation)
+
+
+    def append(self, m):
+        insort(self.sortedpopulation, m)

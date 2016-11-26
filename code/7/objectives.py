@@ -18,8 +18,8 @@ class functionTypeObjective(objective):
 
     def __init__(self, function, type=lt):
         super(functionTypeObjective, self).__init__()
-        self.cache={}
-        self.normalisedCache={}
+        self._cache={}
+        self._normalisedCache={}
         self.function=function
         self.type=type
 
@@ -27,7 +27,7 @@ class functionTypeObjective(objective):
         self.type=type
 
     def score(self,*args):
-        value=self.cache.get(args,False)
+        value=self._cache.get(args,False)
         if not value:
             value=self.function(*args)
 

@@ -1,6 +1,7 @@
 from __future__ import division
 from bisect import bisect
 from utils import Pretty
+from math import pi
 
 def median(population, isSorted=False):
 	population=population if isSorted else sorted(population)
@@ -26,11 +27,11 @@ def hedges():
 
 def a12slow(p1,p2,small=0.56):
 	greaterCount=equalCount=0
-	for p1i in pi.sorted:
-		for p2i in pi.sorted:
+	for p1i in p1:
+		for p2i in p2:
 			if p1i == p2i:  equalCount+=1
 			elif p1i > p2i: greaterCount+=1
-	return (greaterCount+ 0.5*equalCount)/(p1.size+p2.size)  < small
+	return (greaterCount+ 0.5*equalCount)/(len(p1)+len(p2))  < small
 
 def cliffsDelta(p1,p2, small=0.147):
 	greaterCount=lesserCount=0

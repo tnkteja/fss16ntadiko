@@ -342,7 +342,7 @@ class de(optimizer):
         self.baselineGeneration=currentGeneration[::]
         g=0
         lives=1
-        while lives > 0:
+        while lives > 0 and g < 100:
             lives-=1
             lastGeneration=currentGeneration[::]
             for i,ind in self.selection(currentGeneration):
