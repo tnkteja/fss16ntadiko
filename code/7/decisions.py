@@ -10,10 +10,12 @@ __author__ = "ntadiko"
 from itertools import product
 from operator import sub
 import random
-from sys import maxint
+from sys import maxint, dont_write_bytecode
 
 
 from dsl import decision,constraint
+
+dont_write_bytecode=True
 
 class intTypeDecision(decision):
 	"""IntTypeDecision
