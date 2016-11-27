@@ -16,12 +16,13 @@ dont_write_bytecode=True
 
 class functionTypeObjective(objective):
 
-    def __init__(self, function, type=lt):
+    def __init__(self, function, bounds=(0,0),type=lt):
         super(functionTypeObjective, self).__init__()
         self._cache={}
         self._normalisedCache={}
         self.function=function
         self.type=type
+        self.bounds=bounds
 
     def setType(self,type):
         self.type=type

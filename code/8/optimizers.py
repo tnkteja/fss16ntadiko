@@ -192,7 +192,7 @@ class ga(optimizer):
     def mutate(self,individual, rate=0.1):
         individual.solution = list(individual.solution)
         for i,decision in enumerate(self.problem.decisions):
-            if random.random() < 0.2:
+            if random.random() < rate:
                 individual.solution[i]=decision.random()
         individual.solution=tuple(individual.solution)
         individual.objectiveScores=self.problem.objectiveScores(individual.solution)
@@ -216,12 +216,24 @@ class ga(optimizer):
         g=0
         lives=1
         for g in xrange(generations):
+            lives=lives-1
             if lives < 0:
                 break
-            lives-=1
             offspring=[]
-            offspring.extend([ self.mutate(self.crossover(*random.sample(currentGeneration,2))) for _ in xrange(size)])
-            lastGeneration=currentGeneration
+            for _ in xrange(size):
+                newborn=self.mutate(self.crossover(*random.sample(currentGeneration,2)))
+                duplicate=False
+                for ind in currentGeneration:
+                    if newborn.solution == ind.solution:
+                        duplicate=True
+                        break
+                for alreadyborn in offspring:
+                    if newborn.solution == alreadyborn.solution:
+                        duplicate=True
+                        break
+                if not duplicate:
+                    offspring.append(newborn)
+            lastGeneration=currentGeneration[::]
             currentGeneration.extend(offspring)
             currentGeneration=self.elitism(currentGeneration, size)
             lives=self.problem.krallbstopmethod(lives,lastGeneration,currentGeneration)
@@ -302,6 +314,20 @@ class nsga2(ga):
         selection.extend(self.cuboidSorting(frontiers[i],remaining))
         return selection
 
+
+class gacdom(ga):
+
+    def setProblem(self,problem):
+        super(ga, self).setProblem(problem)
+        self.domination=self.problem.continuousDomination
+        self.fitness=self.problem.continuousDominance
+
+    def elitism(self, currentGeneration, retainSize):
+        sortedCurrentGeneration=[]
+        for ind in currentGeneration:
+            self.problem.continuousDominance(ind, currentGeneration)
+            insort(sortedCurrentGeneration, ind)
+        return sortedCurrentGeneration[:retainSize]
 
 class de(optimizer):
     """Diffrential Evolution

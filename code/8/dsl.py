@@ -84,7 +84,6 @@ class problem(Pretty):
                 return False
         return atleastOneBetter
 
-
     def continuousDomination(self,one, other):
         lossOneFromOther=lossOtherFromOne=0
         for i,objective in enumerate(self.objectives):
@@ -95,10 +94,23 @@ class problem(Pretty):
             lossOtherFromOne+=-1*e**((-1 if objective.type is lt else 1)*(otherNormalised-oneNormalised)/len(self.objectives))
         return lossOneFromOther < lossOtherFromOne
 
+    def continuousDominance(self,one, generation):
+        loss=0
+        for i,other in enumerate(generation):
+            if one is other:
+                continue
+            for j, objective in enumerate(self.objectives):            
+                oneNormalised=objective.normalise(one.objectiveScores[j])
+                otherNormalised=objective.normalise(other.objectiveScores[j])
+                loss+=-1*e**((-1 if objective.type is lt else 1)*(oneNormalised-otherNormalised)/len(self.objectives))
+        one.fitness=loss
+        return loss
+
     def dominanceRank(self,individual, generation, dominates=None):
         rank=0
         for i,other in enumerate(generation):
-            rank=count + (0 if dominates(individual,other) else 1)
+            rank=rank + (0 if individual.dominates(other) else 1)
+        individual.fitness=rank
         return rank
 
     def dominanceCount(self,individual,generation):
@@ -256,7 +268,9 @@ class objective(Pretty):
         self.preRunMinimum,self.preRunMaximum=self._minimumSoFar,self._maximumSoFar
 
     def normalise(self,x):
-        return (x-self.preRunMinimum)/(self.preRunMaximum-self.preRunMinimum)
+        mi=self.bounds[0] or self.preRunMinimum
+        ma=self.bounds[1] or self.preRunMaximum
+        return (x-mi)/(ma-mi)
 
 class constraint(Pretty):
 
