@@ -74,7 +74,7 @@ class sa(optimizer):
                         print('?',end='')
                 print('.',end='')
                 k-=1
-                
+
         print()
         print('bestEnergy: ',bestEnergy,"bestSolution: ",bestSolution,"bestScore",str(self.problem.infamousSum(self.problem.objectiveScores(bestSolution))))
 
@@ -144,8 +144,8 @@ class mws(optimizer):
                 if p > random.random():
                     randomsettingvalue=sol[self.problem.decisions.index(randomsetting)]
                     sol[i]=randomsetting.mutate(randomsettingvalue)
-                # Then, at probability (1-p), fixate on one variable and try all its 
-                # values in (say) increments of (max-min)/10 (and use the value that most 
+                # Then, at probability (1-p), fixate on one variable and try all its
+                # values in (say) increments of (max-min)/10 (and use the value that most
                 # improves the score function).
                 else:
                     sol=max(self.varyOn(pivot=sol,decision=(i,randomsetting)),key=lambda x:  self.score(x))
@@ -197,7 +197,7 @@ class ga(optimizer):
         individual.solution=tuple(individual.solution)
         individual.objectiveScores=self.problem.objectiveScores(individual.solution)
         return individual
-        
+
 
     def elitism(self, currentGeneration,retainSize):
         sortedCurrentGeneration=[]
@@ -211,8 +211,9 @@ class ga(optimizer):
         self.domination=self.problem.binaryDomination
         self.fitness=self.problem.dominanceCount
 
-    def run(self, size=100,generations=100):
-        currentGeneration=[ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]
+    def run(self, size=100,generations=100, initialGeneration=[]):
+        currentGeneration= [individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]
+        self.baselineGeneration=currentGeneration
         g=0
         lives=1
         for g in xrange(generations):

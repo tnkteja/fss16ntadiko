@@ -70,7 +70,7 @@ class problem(Pretty):
     def objectiveScores(self,solution):
         return tuple([ objective.score(*solution) for objective in self.objectives])
 
-    
+
     def binaryDomination(self,one,other):
         """
         All should be better or equal, with atleast one better.
@@ -99,7 +99,7 @@ class problem(Pretty):
         for i,other in enumerate(generation):
             if one is other:
                 continue
-            for j, objective in enumerate(self.objectives):            
+            for j, objective in enumerate(self.objectives):
                 oneNormalised=objective.normalise(one.objectiveScores[j])
                 otherNormalised=objective.normalise(other.objectiveScores[j])
                 loss+=-1*e**((-1 if objective.type is lt else 1)*(oneNormalised-otherNormalised)/len(self.objectives))
@@ -126,7 +126,7 @@ class problem(Pretty):
     def infamousSum(self,objectivesScores):
         s=0
         for i,objective in enumerate(self.objectives):
-            
+
                 s+= (-1 if objective.type == lt else 1)* objectivesScores[i]
 
         if s < self.minimumInfamousSum:  self.minimumInfamousSum=s
@@ -149,7 +149,7 @@ class problem(Pretty):
         # Set the prerun results
         for i,objective in enumerate(self.objectives):
             objective.initialisePreRunMinMax()
-    
+
     def solve(self, repeatOn=[]):
         self.preRun()
         self.optimizer.setProblem(self)
@@ -175,7 +175,7 @@ class problem(Pretty):
         referenceSet=[]
         for pareto in extendedParetoFrontier:
             insort(referenceSet,(len(extendedParetoFrontier)-self.dominanceCount(pareto,extendedParetoFrontier),pareto))
-        
+
         self.referenceSet=[ referenceSet[i][1] for i in xrange(limitTo)]
         return self.referenceSet
 
@@ -191,7 +191,7 @@ class problem(Pretty):
         noImprovementOnAnything=True
         for i,objective in enumerate(self.objectives):
             boolean=a12(map(lambda ind:  ind.objectiveScores[i],lastGeneration),map(lambda ind:  ind.objectiveScores[i],currentGeneration))
-            if (objective.type is lt and not boolean) or (objective.type is gt and boolean): 
+            if (objective.type is lt and not boolean) or (objective.type is gt and boolean):
                 noImprovementOnAnything=False
                 lives+=5
         if noImprovementOnAnything:
@@ -227,10 +227,9 @@ class problem(Pretty):
         """
         referencePoint= referencePoint or [ (objective._maximumSoFar if objective.type == lt else objective._minimumSoFar) for objective in self.objectives]
         return HyperVolume(referencePoint).compute(paretoFrontier)
-    
-    def lossStatitic(self, paretoFrontier, referenceSet):
-        loss=0
-        return sum([ self.continuousDomination(refInd.objectiveScores, paretoInd.objectiveScores) for refInd in referenceSet for paretoInd in paretoFrontier])
+
+    def lossStatitic(self, baselineGeneration, paretoFrontier):
+        return sum([ self.continuousDominance(refInd, paretoFrontier) for refInd in baselineGeneration ])
 
 class optimizer(Pretty):
     """
@@ -303,7 +302,7 @@ class individual(Pretty):
 
     def __rshift__(self,other):
         return self.__optimizer.domination(self.objectiveScores,other.objectiveScores)
-        
+
 class experiment(Pretty):
     def __init__(self):
         pass
