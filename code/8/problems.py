@@ -145,9 +145,9 @@ class dtlz3(_dtlz):
 
 		g=lambda *x:  100 * (k+sum([ (x[i]-0.5)**2 - cos(20*pi*(x[i]-0.5)) for i in xrange(k,numberOfDecisions-k)]))
 
-		fs=[lambda *x:  reduce(mul, + [ cos(xi*pi*0.5) for xi in x[:-(i+1) ] ] + [ ( sin(x[-i]*pi*0.5) if i > 0 else 1 ) , ( 1 + g(*x) ) ]) for i in xrange(numberOfObjectives)]
+		fs=[lambda *x:  reduce(mul,[1+g(*x)] +[ cos(xi*pi*0.5) for xi in x[:-(i+1) ] ] + [ ( sin(x[-i]*pi*0.5) if i > 0 else 1 ) , ( 1 + g(*x) ) ]) for i in xrange(numberOfObjectives)]
 		
-		super(dtlz1, self).__init__(
+		super(dtlz3, self).__init__(
 			numberOfDecisions=numberOfDecisions,
 			fs=fs,
 			optimizer=optimizer,
@@ -162,9 +162,9 @@ class dtlz5(_dtlz):
 
 		thetas=[ lambda *x:  (pi/(4 + g(*x)))*(1+2*g(*x)*x[i]) for i in xrange(numberOfObjectives) ]
 
-		fs=[lambda *x:  reduce(mul, [ cos(thetai(*x)*pi*0.5) for thetai in thetas[:-(i+1) ] ] + [ ( sin(thetas[-i](*x)*pi*0.5) if i > 0 else 1 ) , ( 1 + g(*x) ) ]) for i in xrange(numberOfObjectives)]
+		fs=[lambda *x:  reduce(mul, [1+g(*x)]+[ cos(thetai(*x)*pi*0.5) for thetai in thetas[:-(i+1) ] ] + [ ( sin(thetas[-i](*x)*pi*0.5) if i > 0 else 1 ) , ( 1 + g(*x) ) ]) for i in xrange(numberOfObjectives)]
 		
-		super(dtlz1, self).__init__(
+		super(dtlz5, self).__init__(
 			numberOfDecisions=numberOfDecisions,
 			fs=fs,
 			optimizer=optimizer,
