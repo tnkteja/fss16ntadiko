@@ -68,7 +68,8 @@ class problem(Pretty):
         return list(sols)
 
     def objectiveScores(self,solution):
-        return tuple([ objective.score(*solution) for objective in self.objectives])
+        scores=tuple([ objective.score(*solution) for objective in self.objectives])
+        return scores
 
 
     def binaryDomination(self,one,other):

@@ -19,17 +19,13 @@ from utils import Pretty
 
 
 class modelObjective(objective):
-	def __init__(self,name,model):
+	def __init__(self,name,m):
 		self.name=name
-		self.model=model
-		self.score=None
+		self.model=m
 		self.type=lt
 
 	def score(self,*solution):
-		v=self.model.__cache.get(solution,0)
-		if not v:
-			v=self.model.run(*solution)
-		return v[0]
+		self.model.objectiveScores(*solution)[0]
 
 class model(object):
 	def __init__(self,problem, initialGeneration):
@@ -38,12 +34,19 @@ class model(object):
 		self.objectives=[modelObjective("cdomloss",self)]
 		self.__cache={}
 
+	def objectiveScores(self,*solution):
+		v=self.__cache.get(solution,0)
+		if not v:
+			v=self.run(*solution)
+			self.__cache[solution]=v
+		return v
+
 	def __iter__(self):
 		for obj in self.objectives:
 			yield obj
 
 	def run(self,*solution):
-		kwargs={k:v for v in zip(["mr","cr","size","generations"],solution)}
+		kwargs={k:v for k,v in zip(["mr","cr","size","generations"],solution)}
 		self.problem.setOptimizer(ga(**kwargs))
 		self.problem.solve()
 		self.__cache[solution]=[p.lossStatistic(p.initialGeneration,self.problem.result)]
