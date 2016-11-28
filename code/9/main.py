@@ -7,7 +7,7 @@ __author__ = "ntadiko"
 from pickle import load, dump
 from problems import dtlz1,dtlz3,dtlz5,dtlz7, kursawe
 from operator import lt, gt
-from optimizers import nsga2, gacdom, ga
+from optimizers import nsga2, gacdom, ga,de
 from random import seed
 from collections import defaultdict
 from pprint import pprint
@@ -46,7 +46,7 @@ class model(object):
 			yield obj
 
 	def run(self,*solution):
-		kwargs={k:v for k,v in zip(["mr","cr","size","generations"],solution)}
+		kwargs={k:v for k,v in zip(["mr","cr","select","size","generations"],solution)}
 		self.problem.setOptimizer(ga(**kwargs))
 		self.problem.solve(initialGeneration=self.initialGeneration)
 		self.__cache[solution]=[p.lossStatistic(p.initialGeneration,self.problem.result)]
@@ -54,8 +54,6 @@ class model(object):
 class gatuner(problem):
 
 	def __init__(self, problem, initialGeneration):
-		print initialGeneration
-		quit()
 		super(gatuner, self).__init__(
 			decisions=[
 			enumTypeDecision(name="mutation", values=[0.1,0.3,0.5]),
@@ -64,7 +62,8 @@ class gatuner(problem):
 			enumTypeDecision(name="size",values=[50,100,150]),
 			enumTypeDecision(name="generations", values=[20,40,80])
 			],
-			objectives=model(problem, initialGeneration)
+			objectives=model(problem, initialGeneration),
+			optimizer=de()
 			)
 
 pbs=[ problem(numberOfObjectives=o,numberOfDecisions=d) for problem in [dtlz1,dtlz3,dtlz5,dtlz7] for o in [2,4,6,8] for d in [10,20,40]]
@@ -73,8 +72,6 @@ for p in pbs:
 	baselinepopulations=None
 	with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"baselinepopulations.pickle"]),"rb") as f:
 		baselinepopulations=load(f)
-	print baselinepopulations
-	quit(0)
 	pp=gatuner(p, baselinepopulations[0])
 	pp.solve()
 	print pp.result

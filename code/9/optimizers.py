@@ -181,6 +181,7 @@ class ga(optimizer):
     """
     def __init__(self,mr=0.1,cr=None,select=None,size=100,generations=100):
         self.mr,self.select,self.size,self.generations=mr,select,size,generations
+        print(self.mr,self.select,self.size,self.generations)
         super(ga,self).__init__()
 
         if cr == "twoPoint":
@@ -206,7 +207,7 @@ class ga(optimizer):
     def uniformCrossover(self, one, other):
         newSolution=[]
         for i,decision in enumerate(self.problem.decisions):
-            if rnadom.random() < 0.5:
+            if random.random() < 0.5:
                 newSolution.append(one[i])
             else:
                 newSolution.append(two[i])
@@ -246,7 +247,6 @@ class ga(optimizer):
             self.fitness=self.problem.dominanceCount
 
     def run(self, size=100,generations=100, initialGeneration=[]):
-        print("ga",size,generations,bool(initialGeneration))
         size=self.size or size
         generations=self.generations or generations
         currentGeneration= [individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]
