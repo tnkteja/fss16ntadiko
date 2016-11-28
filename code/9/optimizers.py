@@ -246,6 +246,7 @@ class ga(optimizer):
             self.fitness=self.problem.dominanceCount
 
     def run(self, size=100,generations=100, initialGeneration=[]):
+        print("ga",size,generations,bool(initialGeneration))
         size=self.size or size
         generations=self.generations or generations
         currentGeneration= [individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]

@@ -48,7 +48,7 @@ class model(object):
 	def run(self,*solution):
 		kwargs={k:v for k,v in zip(["mr","cr","size","generations"],solution)}
 		self.problem.setOptimizer(ga(**kwargs))
-		self.problem.solve()
+		self.problem.solve(initialGeneration=self.initialGeneration)
 		self.__cache[solution]=[p.lossStatistic(p.initialGeneration,self.problem.result)]
 
 class gatuner(problem):
