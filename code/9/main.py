@@ -37,19 +37,14 @@ class model(object):
 	def objectiveScores(self,*solution):
 		v=self.__cache.get(solution,0)
 		if not v:
-			v=self.run(*solution)
-			self.__cache[solution]=v
+			self.problem.setOptimizer(ga(**kwargs))
+			self.problem.solve(initialGeneration=self.initialGeneration)
+			self.__cache[solution]=v=[p.lossStatistic(p.baselineGeneration,self.problem.result)]
 		return v
 
 	def __iter__(self):
 		for obj in self.objectives:
 			yield obj
-
-	def run(self,*solution):
-		kwargs={k:v for k,v in zip(["mr","cr","select","size","generations"],solution)}
-		self.problem.setOptimizer(ga(**kwargs))
-		self.problem.solve(initialGeneration=self.initialGeneration)
-		self.__cache[solution]=[p.lossStatistic(p.baselineGeneration,self.problem.result)]
 
 class gatuner(problem):
 

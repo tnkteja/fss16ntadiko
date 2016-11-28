@@ -214,7 +214,7 @@ class ga(optimizer):
         return individual(self.problem, self, newSolution, None)
 
     def mutate(self,individual):
-         individual.solution = list(individual.solution)
+        individual.solution = list(individual.solution)
         for i,decision in enumerate(self.problem.decisions):
             if random.random() < self.mr:
                 individual.solution[i]=decision.random()
