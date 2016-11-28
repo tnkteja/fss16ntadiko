@@ -130,9 +130,44 @@ class floatTypeDecision(decision):
 class enumTypeDecision(decision):
 	"""enumTypeDecision
 	"""
-	def __init__(self):
+	def __init__(self,name=None, values=[]):
+		self.name=name
+		self.values=values
+		self.bounds=(0,len(self.values))
+		self.__picked=set()
+		
+	def random(self):
+		return random.choice(self.values)
+
+	def random_without_replacing(self):
 		pass
 
+	def setMutationRange(fraction):
+		pass
+
+	def isInBounds(self,x):
+		return self.bounds[0] <= x <= self.bounds[1]
+
+	def limitToBounds(self,x):
+		return max(self.bounds[0],min(x,self.bounds[1]))
+
+	def mutate(self,x):
+		newX=x
+		while True:
+			newX=x+(random.randint(self.bounds[0],self.bounds[1]+1) * (1 if random.random() < 0.5 else -1))
+			if self.isInBounds(newX):
+				break
+		return self.values[newX]
+
+	def count(self, start=0,step=0,end=0, steps=1000,randomPick=True):
+		step=round(step or (sub(*self.bounds[::-1])/steps)) or 1
+		start= start or self.bounds[0]
+		end= end or self.bounds[1]
+		while start < end:
+			yield self.values[(random.randint(start,start+step) if randomPick else start)]
+			start+=step
+		if not randomPick:
+			yield self.values[star]
 
 class polynomialConstraint(constraint):
 	"""

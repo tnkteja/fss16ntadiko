@@ -13,30 +13,62 @@ from collections import defaultdict
 from pprint import pprint
 from itertools import combinations
 from threading import Thread
+from dsl import problem, objective
+from decisions import enumTypeDecision
+from utils import Pretty
+
+
+class modelObjective(objective):
+	def __init__(self,name,model):
+		self.name=name
+		self.model=model
+		self.score=None
+		self.type=lt
+
+	def score(self,*solution):
+		v=self.model.__cache.get(solution,0)
+		if not v:
+			v=self.model.run(*solution)
+		return v[0]
+
+class model(object):
+	def __init__(self,problem, initialGeneration):
+		self.problem=problem
+		self.initialGeneration=initialGeneration
+		self.objectives=[modelObjective("cdomloss",self)]
+		self.__cache={}
+
+	def __iter__(self):
+		for obj in self.objectives:
+			yield obj
+
+	def run(self,*solution):
+		kwargs={k:v for v in zip(["mr","cr","size","generations"],solution)}
+		self.problem.setOptimizer(ga(**kwargs))
+		self.problem.solve()
+		self.__cache[solution]=[p.lossStatistic(p.initialGeneration,self.problem.result)]
+
+class gatuner(problem):
+
+	def __init__(self, problem, initialGeneration):
+		super(gatuner, self).__init__(
+			decisions=[
+			enumTypeDecision(name="mutation", values=[0.1,0.3,0.5]),
+			enumTypeDecision(name="crossover", values=["singlePoint","TwoPoint","uniform"]),
+			enumTypeDecision(name="selection", values=["dominanceCount","dominanceRank","continuousDominanceLoss"]),
+			enumTypeDecision(name="size",values=[50,100,150]),
+			enumTypeDecision(name="generations", values=[20,40,80])
+			],
+			objectives=model(problem, initialGeneration)
+			)
 
 pbs=[ problem(numberOfObjectives=o,numberOfDecisions=d) for problem in [dtlz1,dtlz3,dtlz5,dtlz7] for o in [2,4,6,8] for d in [10,20,40]]
-optimizers=[nsga2,gacdom]
-pms=defaultdict(list)
 
-def target(p,pms,optimizers):
+for p in pbs:
 	baselinepopulations=None
-	with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives))])+".baselinepopulations.pickle","rb") as f:
-	    baselinepopulations=load(f)
-	with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"out"]),'w') as f:
-		print >> f, "Started ..."
-		f.flush()
-		for optimizer in optimizers:
-			p.setOptimizer(optimizer=optimizer())
-			p.solve(repeatOn=baselinepopulations)
-			pms['.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),optimizer.__name__])].append(map(p.lossStatitic, p.baselineGenerations,p.results))
-		print >> f, "Done .."
-
-threads=[Thread(target=target, args=[p,pms, optimizers]) for p in pbs]
-for thread in threads:
-	thread.start()
-for thread in threads:
-	thread.join()
-with open("nsga2lossStatistic.pickle","wb") as f:
-	pms=dict(pms)
-	dump(pms, f)
-	pprint(pms)
+	with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"baselinepopulations.pickle"]),"rb") as f:
+		baselinepopulations=load(f)
+	pp=gatuner(p, baselinepopulations[0])
+	pp.solve()
+	print pp.result
+	quit()

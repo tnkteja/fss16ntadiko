@@ -103,14 +103,14 @@ class problem(Pretty):
                 oneNormalised=objective.normalise(one.objectiveScores[j])
                 otherNormalised=objective.normalise(other.objectiveScores[j])
                 loss+=-1*e**((-1 if objective.type is lt else 1)*(oneNormalised-otherNormalised)/len(self.objectives))
-        one.fitness=loss
+        one.fitness=-loss
         return loss
 
     def dominanceRank(self,individual, generation, dominates=None):
         rank=0
         for i,other in enumerate(generation):
             rank=rank + (0 if individual.dominates(other) else 1)
-        individual.fitness=rank
+        individual.fitness=-rank
         return rank
 
     def dominanceCount(self,individual,generation):
@@ -150,13 +150,13 @@ class problem(Pretty):
         for i,objective in enumerate(self.objectives):
             objective.initialisePreRunMinMax()
 
-    def solve(self, repeatOn=[]):
+    def solve(self, initialGeneration=[],repeatOn=[]):
         self.preRun()
         self.optimizer.setProblem(self)
         self.results=[]
         self.baselineGenerations=[]
         if not repeatOn:
-            self.optimizer.run()
+            self.optimizer.run(initialGeneration=initialGeneration)
             self.result=self.optimizer.results
             return
         for initialPopulation in repeatOn:
@@ -238,6 +238,7 @@ class optimizer(Pretty):
     def __init__(self):
         self.problem=None
         self.name=self.__class__.__name__
+        self.baselineGeneration=None
 
 
     def setProblem(self, problem):

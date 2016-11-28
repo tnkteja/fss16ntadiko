@@ -179,15 +179,38 @@ class mwse(mws):
 class ga(optimizer):
     """Genetic Algorithm
     """
-    def __init__(self):
+    def __init__(self,mr=0.1,cr=None,select=None,size=100,generations=100):
+        self.mr,self.select,self.size,self.generations=mr,select,size,generations
         super(ga,self).__init__()
-        self.crossover=self.singlePointCrossover
+
+        if cr == "twoPoint":
+            self.crossover=self.twoPointCrossover
+        elif cr == "uniform":
+            self.crossover=self.uniformCrossover
+        else:
+            self.crossover=self.singlePointCrossover
+
 
     def singlePointCrossover(self,one,other,r=0.3):
         singlePoint=len(self.problem.decisions)//2
         newSolution=one.solution[:singlePoint]+other.solution[singlePoint:]
         newindividual=individual(self.problem,self, newSolution, None)
         return newindividual
+
+    def twoPointCrossover(self,one,other):
+        firstPoint,secondPoint=len(self.problem.decisions)//3,2*len(self.problem.decisions)//3
+        newSolution=one.solution[:firstPoint]+other.solution[firstPoint:secondPoint]+one.solution[secondPoint:]
+        newIndividual=individual(self.problem,self,newSolution)
+        return newIndividual        
+
+    def uniformCrossover(self, one, other):
+        newSolution=[]
+        for i,decision in enumerate(self.problem.decisions):
+            if rnadom.random() < 0.5:
+                newSolution.append(one[i])
+            else:
+                newSolution.append(two[i])
+        return individual(self.problem, self, newSolution, None)
 
     def mutate(self,individual, rate=0.1):
         individual.solution = list(individual.solution)
@@ -208,12 +231,25 @@ class ga(optimizer):
 
     def setProblem(self,problem):
         super(ga, self).setProblem(problem)
-        self.domination=self.problem.binaryDomination
-        self.fitness=self.problem.dominanceCount
+
+        if self.select == "dominanceRank":
+            self.domination=self.problem.binaryDomination
+            self.fitness=self.problem.dominanceRank
+        elif self.select == "dominanceDepth":
+            self.domination=self.problem.binaryDomination
+            self.fitness=self.problem.dominanceDepth
+        elif self.select == "continuousDominanceLoss":
+            self.domination=self.problem.continuousDomination
+            self.fitness=self.problem.continuousDominance
+        else: 
+            self.domination=self.problem.binaryDomination
+            self.fitness=self.problem.dominanceCount
 
     def run(self, size=100,generations=100, initialGeneration=[]):
+        size=self.size or size
+        generations=self.generations or generations
         currentGeneration= [individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]
-        self.baselineGeneration=currentGeneration
+        self.baselineGeneration=currentGeneration[:self.size]
         g=0
         lives=1
         for g in xrange(generations):
