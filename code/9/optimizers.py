@@ -208,15 +208,15 @@ class ga(optimizer):
         newSolution=[]
         for i,decision in enumerate(self.problem.decisions):
             if random.random() < 0.5:
-                newSolution.append(one[i])
+                newSolution.append(one.solution[i])
             else:
-                newSolution.append(two[i])
+                newSolution.append(other.solution[i])
         return individual(self.problem, self, newSolution, None)
 
-    def mutate(self,individual, rate=0.1):
-        individual.solution = list(individual.solution)
+    def mutate(self,individual):
+         individual.solution = list(individual.solution)
         for i,decision in enumerate(self.problem.decisions):
-            if random.random() < rate:
+            if random.random() < self.mr:
                 individual.solution[i]=decision.random()
         individual.solution=tuple(individual.solution)
         individual.objectiveScores=self.problem.objectiveScores(individual.solution)
@@ -247,6 +247,7 @@ class ga(optimizer):
             self.fitness=self.problem.dominanceCount
 
     def run(self, size=100,generations=100, initialGeneration=[]):
+        print("ga",self.size,self.select,self.generations,self.mr)
         size=self.size or size
         generations=self.generations or generations
         currentGeneration= [individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in initialGeneration] or [ individual(self.problem,self,solution, self.problem.objectiveScores(solution)) for solution in self.problem.randomSample(size)]

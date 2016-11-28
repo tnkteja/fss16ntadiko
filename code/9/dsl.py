@@ -159,6 +159,7 @@ class problem(Pretty):
         if not repeatOn:
             self.optimizer.run(initialGeneration=initialGeneration)
             self.result=self.optimizer.results
+            self.baselineGeneration=self.optimizer.baselineGeneration
             return
         for initialPopulation in repeatOn:
             self.optimizer.run(initialGeneration=initialPopulation)
@@ -229,7 +230,7 @@ class problem(Pretty):
         referencePoint= referencePoint or [ (objective._maximumSoFar if objective.type == lt else objective._minimumSoFar) for objective in self.objectives]
         return HyperVolume(referencePoint).compute(paretoFrontier)
 
-    def lossStatitic(self, baselineGeneration, paretoFrontier):
+    def lossStatistic(self, baselineGeneration, paretoFrontier):
         return sum([ self.continuousDominance(refInd, paretoFrontier) for refInd in baselineGeneration ])
 
 class optimizer(Pretty):
