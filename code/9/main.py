@@ -54,6 +54,8 @@ class model(object):
 class gatuner(problem):
 
 	def __init__(self, problem, initialGeneration):
+		print initialGeneration
+		quit()
 		super(gatuner, self).__init__(
 			decisions=[
 			enumTypeDecision(name="mutation", values=[0.1,0.3,0.5]),
@@ -71,6 +73,8 @@ for p in pbs:
 	baselinepopulations=None
 	with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"baselinepopulations.pickle"]),"rb") as f:
 		baselinepopulations=load(f)
+	print baselinepopulations
+	quit(0)
 	pp=gatuner(p, baselinepopulations[0])
 	pp.solve()
 	print pp.result
