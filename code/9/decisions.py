@@ -134,7 +134,7 @@ class enumTypeDecision(decision):
     def __init__(self,name=None, values=[]):
         self.name=name
         self.values=values
-        self.bounds=(0,len(self.values))
+        self.bounds=(0,len(self.values)-1)
         self.__picked=set()
         
     def random(self):
