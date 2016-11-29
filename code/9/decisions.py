@@ -153,7 +153,7 @@ class enumTypeDecision(decision):
         return self.bounds[0]+x%len(self.values)
 
     def mutate(self,x):
-        newX=x
+        newX=self.values.index(x)
         while True:
             newX=x+(random.randint(self.bounds[0],self.bounds[1]+1) * (1 if random.random() < 0.5 else -1))
             if self.isInBounds(newX):
