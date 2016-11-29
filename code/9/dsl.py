@@ -265,6 +265,7 @@ class objective(Pretty):
 
     def __init__(self):
         self._minimumSoFar=self._maximumSoFar=0
+        self.bounds=(0,0)
 
     def initialisePreRunMinMax(self):
         self.preRunMinimum,self.preRunMaximum=self._minimumSoFar,self._maximumSoFar

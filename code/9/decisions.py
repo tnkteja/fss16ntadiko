@@ -44,7 +44,8 @@ class intTypeDecision(decision):
 		return self.bounds[0] <= x <= self.bounds[1]
 
 	def limitToBounds(self,x):
-		return max(self.bounds[0],min(x,self.bounds[1]))
+		i=self.values.index(x)
+		return self.values[max(0,min(i,len(self.values)-1))]
 
 	def mutate(self,x):
 		newX=x
@@ -149,7 +150,7 @@ class enumTypeDecision(decision):
 		return self.bounds[0] <= x <= self.bounds[1]
 
 	def limitToBounds(self,x):
-		return max(self.bounds[0],min(x,self.bounds[1]))
+            return int(max(0,min(x,len(self.values)-1)))
 
 	def mutate(self,x):
 		newX=x
@@ -157,6 +158,7 @@ class enumTypeDecision(decision):
 			newX=x+(random.randint(self.bounds[0],self.bounds[1]+1) * (1 if random.random() < 0.5 else -1))
 			if self.isInBounds(newX):
 				break
+                        newX=int(newX)
 		return self.values[newX]
 
 	def count(self, start=0,step=0,end=0, steps=1000,randomPick=True):

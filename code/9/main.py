@@ -7,7 +7,7 @@ __author__ = "ntadiko"
 from pickle import load, dump
 from problems import dtlz1,dtlz3,dtlz5,dtlz7, kursawe
 from operator import lt, gt
-from optimizers import nsga2, gacdom, ga,de
+from optimizers import nsga2, gacdom, ga,de, sae
 from random import seed
 from collections import defaultdict
 from pprint import pprint
@@ -20,12 +20,16 @@ from utils import Pretty
 
 class modelObjective(objective):
 	def __init__(self,name,m):
+                super(modelObjective,self).__init__()
 		self.name=name
 		self.model=m
 		self.type=lt
 
 	def score(self,*solution):
-		self.model.objectiveScores(*solution)[0]
+             value=self.model.objectiveScores(*solution)[0]
+             if value < self._minimumSoFar:  self._minimumSoFar=value
+             elif value > self._maximumSoFar:  self._maximumSoFar=value
+             return value
 
 class model(object):
 	def __init__(self,problem, initialGeneration):
@@ -37,6 +41,7 @@ class model(object):
 	def objectiveScores(self,*solution):
 		v=self.__cache.get(solution,0)
 		if not v:
+                        kwargs={k:v for k,v in zip(["mr","cr","select","size","generations"],solution)}
 			self.problem.setOptimizer(ga(**kwargs))
 			self.problem.solve(initialGeneration=self.initialGeneration)
 			self.__cache[solution]=v=[p.lossStatistic(p.baselineGeneration,self.problem.result)]
@@ -45,6 +50,9 @@ class model(object):
 	def __iter__(self):
 		for obj in self.objectives:
 			yield obj
+
+        def __len__(self):
+            return len(self.objectives)
 
 class gatuner(problem):
 
@@ -58,7 +66,7 @@ class gatuner(problem):
 			enumTypeDecision(name="generations", values=[20,40,80])
 			],
 			objectives=model(problem, initialGeneration),
-			optimizer=de()
+			optimizer=sae()
 			)
 
 pbs=[ problem(numberOfObjectives=o,numberOfDecisions=d) for problem in [dtlz1,dtlz3,dtlz5,dtlz7] for o in [2,4,6,8] for d in [10,20,40]]
@@ -69,5 +77,7 @@ for p in pbs:
 		baselinepopulations=load(f)
 	pp=gatuner(p, baselinepopulations[0])
 	pp.solve()
-	print pp.result
+        result=[(ind.solution,ind.objectiveScores) for ind in pp.result]
+        with open("result.pickle",'w') as f:
+            dump(result,f)
 	quit()

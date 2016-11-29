@@ -393,7 +393,14 @@ class de(optimizer):
             for i,decision in enumerate(ind.solution):
                 if random.random() < cf:
                     noneChanged=False
-                    new[i]=self.problem.decisions[i].limitToBounds(X.solution[i]+f*(Y.solution[i]-Z.solution[i]))
+                    if self.problem.decisions[i].__class__.__name__ == "enumTypeDecision":
+                        x=self.problem.decisions[i].values.index(X.solution[i])
+                        y=self.problem.decisions[i].values.index(Y.solution[i])
+                        z=self.problem.decisions[i].values.index(Z.solution[i])
+                        n=self.problem.decisions[i].limitToBounds(x+f*(y-z))
+                        new[i]=self.problem.decisions[i].values[n]
+                    else:
+                        new[i]=self.problem.decisions[i].limitToBounds(X.solution[i]+f*(Y.solution[i]-Z.solution[i]))
         return individual(self.problem, self, tuple(new), self.problem.objectiveScores(new))
 
     def setProblem(self,problem):
