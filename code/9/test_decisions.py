@@ -108,7 +108,7 @@ class Test_enumTypeDecision(TestCase):
         print list(self.enumTypeDecision.count(steps=1000))
 
     def test_mutate(self):
-        print self.enumTypeDecision.mutate(7)
+        print self.enumTypeDecision.mutate("one")
 
     def tearDown(self):
         pass
