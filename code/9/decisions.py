@@ -158,7 +158,7 @@ class enumTypeDecision(decision):
 			newX=x+(random.randint(self.bounds[0],self.bounds[1]+1) * (1 if random.random() < 0.5 else -1))
 			if self.isInBounds(newX):
 				break
-                        newX=int(newX)
+            newX=int(newX)
 		return self.values[newX]
 
 	def count(self, start=0,step=0,end=0, steps=1000,randomPick=True):
