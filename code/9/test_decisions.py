@@ -7,9 +7,9 @@ from random import random, seed
 from unittest import TestCase, main
 
 
-from decisions import intTypeDecision, floatTypeDecision
+from decisions import enumTypeDecision, floatTypeDecision, enumTypeDecision
 
-class Test_intTypeDecision(TestCase):
+class Test_enumTypeDecision(TestCase):
     @classmethod
     def setUpClass(cls):
         print "\n====| %s |========================"%(cls.__name__)
@@ -17,26 +17,26 @@ class Test_intTypeDecision(TestCase):
     
     def setUp(self):
         print "\n-----| %s |-----------------------"%(self._testMethodName)
-        self.intTypeDecision=intTypeDecision(name="x",bounds=(0,10))
-        print self.intTypeDecision
+        self.enumTypeDecision=enumTypeDecision(name="x",bounds=(0,10))
+        print self.enumTypeDecision
     def test_isInBounds(self):
-        self.assertFalse(self.intTypeDecision.isInBounds(30))
-        self.assertTrue(self.intTypeDecision.isInBounds(5))
+        self.assertFalse(self.enumTypeDecision.isInBounds(30))
+        self.assertTrue(self.enumTypeDecision.isInBounds(5))
 
     def test_random(self):
-        value = self.intTypeDecision.random()
-        self.assertLessEqual(value, self.intTypeDecision.bounds[1] )
-        self.assertGreaterEqual(value, self.intTypeDecision.bounds[0])
+        value = self.enumTypeDecision.random()
+        self.assertLessEqual(value, self.enumTypeDecision.bounds[1] )
+        self.assertGreaterEqual(value, self.enumTypeDecision.bounds[0])
 
     def test_limitToBounds(self):
-        self.assertEqual(self.intTypeDecision.limitToBounds(30), 10)
-        self.assertEqual(self.intTypeDecision.limitToBounds(-2), 0)
+        self.assertEqual(self.enumTypeDecision.limitToBounds(30), 10)
+        self.assertEqual(self.enumTypeDecision.limitToBounds(-2), 0)
 
     def test_count(self):
-        print list(self.intTypeDecision.count(steps=1000))
+        print list(self.enumTypeDecision.count(steps=1000))
 
     def test_mutate(self):
-        print self.intTypeDecision.mutate(7)
+        print self.enumTypeDecision.mutate(7)
 
     def tearDown(self):
         pass
@@ -60,7 +60,8 @@ class Test_floatTypeDecision(TestCase):
         print value
 
     def test_iterate(self):
-        print list(self.floatTypeDecision)
+        # print list(self.floatTypeDecision)
+        pass
 
     def test_mutate(self):
         value = self.floatTypeDecision.random()
@@ -70,7 +71,8 @@ class Test_floatTypeDecision(TestCase):
         self.assertIsNot(value, mutatedvalue)
 
     def test_count(self):
-        print list(self.floatTypeDecision.count(steps=1000))
+        # print list(self.floatTypeDecision.count(steps=1000))
+        pass
 
     def tearDown(self):
         pass
@@ -79,6 +81,41 @@ class Test_floatTypeDecision(TestCase):
     def tearDownClass(cls):
         pass
 
+class Test_enumTypeDecision(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print "\n====| %s |========================"%(cls.__name__)
+        seed(0)
+    
+    def setUp(self):
+        print "\n-----| %s |-----------------------"%(self._testMethodName)
+        self.enumTypeDecision=enumTypeDecision(name="x",values=["zero","one","two","three","four","five","six"])
+        print self.enumTypeDecision
+
+    def test_isInBounds(self):
+        self.assertFalse(self.enumTypeDecision.isInBounds(30))
+        self.assertTrue(self.enumTypeDecision.isInBounds(5))
+
+    def test_random(self):
+        value = self.enumTypeDecision.random()
+        print value
+
+    def test_limitToBounds(self):
+        self.assertEqual(self.enumTypeDecision.limitToBounds(30), 2)
+        self.assertEqual(self.enumTypeDecision.limitToBounds(7), 0)
+
+    def test_count(self):
+        print list(self.enumTypeDecision.count(steps=1000))
+
+    def test_mutate(self):
+        print self.enumTypeDecision.mutate(7)
+
+    def tearDown(self):
+        pass
+
+    @classmethod
+    def tearDownClass(cls):
+        pass
 
 if __name__ == '__main__':
     main()
