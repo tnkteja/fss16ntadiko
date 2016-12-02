@@ -18,12 +18,13 @@ baselinepopulations=[ [p.random() for _ in xrange(100)] for _ in xrange(20)]
 with open("baselinepopulations.pickle","wb") as f:
     dump(baselinepopulations,f)
 pms=defaultdict(list)
-for optimizer in [sae(),mwse()]:
+for optimizer in [sae(),de(),mwse()]:
 	p.setOptimizer(optimizer)
 	p.solve(repeatOn=baselinepopulations)
-	pms[optimizer.name].append(map(p.lossStatitic, p.baselineGenerations,p.results))
+	pms[optimizer.name].append(map(p.lossStatistic, p.baselineGenerations,p.results))
 
-with open("lossStatitics.pickle","wb") as f:
+with open("lossStatisics.pickle","wb") as f:
+        pms=dict(pms)
 	dump(pms, f)
 	pprint(pms)
 
