@@ -66,18 +66,44 @@ class gatuner(problem):
 			enumTypeDecision(name="generations", values=[20,40,80])
 			],
 			objectives=model(problem, initialGeneration),
-			optimizer=sae()
+			optimizer=de()
 			)
 
 pbs=[ problem(numberOfObjectives=o,numberOfDecisions=d) for problem in [dtlz1,dtlz3,dtlz5,dtlz7] for o in [2,4,6,8] for d in [10,20,40]]
 
+dic={"problem":[],
+"GA Parameters (Mutation, Crossover, Select, Size, Generations)":[]
+}
 for p in pbs:
 	baselinepopulations=None
 	with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"baselinepopulations.pickle"]),"rb") as f:
 		baselinepopulations=load(f)
-	pp=gatuner(p, baselinepopulations[0])
-	pp.solve()
-        result=[(ind.solution,ind.objectiveScores) for ind in pp.result]
-        with open("result.pickle",'w') as f:
-            dump(result,f)
-	quit()
+#	pp=gatuner(p, baselinepopulations[0])
+#	pp.solve()
+#        result=[(ind.solution,ind.objectiveScores) for ind in pp.result]
+#        dic["problem"].append('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives))]))
+#        with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"result.pickle"]),'rb') as f:
+#           result=load(f)
+#           result.sort(key=lambda x:  x[1],reverse=True)
+#           best=result[0]
+#           dic["GA Parameters (Mutation, Crossover, Select, Size, Generations)"].append(best[0])
+#        result=[(ind.solution,ind.objectiveScores) for ind in pp.result]
+        dic["problem"].append('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives))]))
+        with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"result.pickle"]),'rb') as f:
+           result=load(f)
+           result.sort(key=lambda x:  x[1],reverse=True)
+           best=result[0]
+           with open('.'.join([p.name,str(len(p.decisions)),str(len(p.objectives)),"TunedvsUntuned.txt"]),"w") as f:
+			   tunedga=ga({k:v for k,v in zip(["mr","cr","select","size","generations"],best)})
+			   p.setOptimizer(tunedga)
+			   p.solve(repeatOn=baselinepopulations)
+			   losses=map(p.lossStatistic,p.baselineGenerations,p.results)
+			   print >> f,'.'.join(["tunedga",'.'.join(map(str,best[0])),p.name,str(len(p.decisions)),str(len(p.objectives))])
+			   print >> f, ' '.join(map(str,losses))
+			   print >> f, ''
+			   p.setOptimizer(ga())
+			   p.solve(repeatOn=baselinepopulations)
+			   losses=map(p.lossStatistic,p.baselineGenerations,p.results)
+			   print >> f,'.'.join(["ga",p.name,str(len(p.decisions)),str(len(p.objectives))])
+			   print >> f, ' '.join(map(str,losses))
+			   print >> f, ''

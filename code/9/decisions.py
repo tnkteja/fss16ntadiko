@@ -150,7 +150,7 @@ class enumTypeDecision(decision):
         return self.bounds[0] <= x <= self.bounds[1]
 
     def limitToBounds(self,x):
-        return self.bounds[0]+x%len(self.values)
+        return self.bounds[0]+int(x)%len(self.values)
 
     def mutate(self,x):
         newX=self.values.index(x)
