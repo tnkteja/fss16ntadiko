@@ -24,11 +24,13 @@ ws1|ws2|ws3|ws4
 
 **Project**
 
-[Slides](http://bit.ly/ase16ntadiko-slides)
-
 [hw7](https://github.com/txt/ase16/blob/master/doc/hw789.md#code7-early-termination)|[hw8](https://github.com/txt/ase16/blob/master/doc/hw789.md#code8-implemment-nsga-ii)|[hw9](https://github.com/txt/ase16/blob/master/doc/hw789.md#code9-hyper-parameter-optimization-fun)
 :-:|:-:|:-:
 [code](http://bit.ly/ase16ntadiko-hw7-code), [report]()|[code](http://bit.ly/ase16ntadiko-hw8-code), [report]()|[code](http://bit.ly/ase16ntadiko-hw9-code), [report]()
+
+**Project Slides**
+
+[Slides](http://bit.ly/ase16ntadiko-slides)
 
 **Final Paper**
 
