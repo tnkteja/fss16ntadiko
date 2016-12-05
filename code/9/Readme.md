@@ -80,7 +80,7 @@ dtlz7.10.8|.3, ‘TwoPoint’, ‘continuousDominanceLoss’, 50, 20)
 dtlz7.20.8|.3, ‘singlePoint’, ‘dominanceRank’, 50, 20)
 dtlz7.40.8|.3, ‘singlePoint’, ‘continuousDominanceLoss’, 50, 80)
 
-We can after getting the tuned vs untuned GA run againsts 20 baseline populations and get the statistical analysis results. We find that either ga and tuned ga are doing equally good or tunedga is performing better than ga. 
+We can after getting the tuned vs untuned GA run againsts 20 baseline populations and get the statistical analysis results. We find that either ga and tuned ga are doing equally good or tunedga is performing better than ga on cdomloss parameter.
 
 ```bash
 rank ,         name ,    med   ,  iqr 
