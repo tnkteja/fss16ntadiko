@@ -16,6 +16,8 @@
 
 from __future__ import print_function,division
 import sys, os
+import random
+
 sys.path.append(os.path.abspath("."))
 __author__ = 'george'
 
@@ -358,3 +360,70 @@ def a12(lst1,lst2,small=0.56):
   gt,eq= loop(t1, t1, t2)
   return gt/(n1*n2) + eq/2/(n1*n2) < 0.56
 
+def sampleWithReplacement(lst):
+  "returns a list same size as list"
+  def any(n)  : return random.uniform(0,n)
+  def one(lst): return lst[ int(any(len(lst))) ]
+  return [one(lst) for _ in lst]
+
+"""
+
+
+Then, for all those samples,
+ check if some *testStatistic* in the original pair
+hold for all the other pairs. If it does more than (say) 99%
+of the time, then we are 99% confident in that the
+populations are the same.
+
+In such a _bootstrap_ hypothesis test, the *some property*
+is the difference between the two populations, muted by the
+joint standard deviation of the populations.
+
+"""
+def testStatistic(y,z): 
+    """Checks if two means are different, tempered
+     by the sample size of 'y' and 'z'"""
+    tmp1 = tmp2 = 0
+    for y1 in y.all: tmp1 += (y1 - y.mu)**2 
+    for z1 in z.all: tmp2 += (z1 - z.mu)**2
+    s1    = (float(tmp1)/(y.n - 1))**0.5
+    s2    = (float(tmp2)/(z.n - 1))**0.5
+    delta = z.mu - y.mu
+    if s1+s2:
+      delta =  delta/((s1/y.n + s2/z.n)**0.5)
+    return delta
+"""
+
+The rest is just details:
+
++ Efron advises
+  to make the mean of the populations the same (see
+  the _yhat,zhat_ stuff shown below).
++ The class _total_ is a just a quick and dirty accumulation class.
++ For more details see [the Efron text][efron01].  
+
+"""
+def bootstrap(y0,z0,conf=0.01,b=10000):
+  """The bootstrap hypothesis test from
+     p220 to 223 of Efron's book 'An
+    introduction to the boostrap."""
+  class total():
+    "quick and dirty data collector"
+    def __init__(i,some=[]):
+      i.sum = i.n = i.mu = 0 ; i.all=[]
+      for one in some: i.put(one)
+    def put(i,x):
+      i.all.append(x);
+      i.sum +=x; i.n += 1; i.mu = float(i.sum)/i.n
+    def __add__(i1,i2): return total(i1.all + i2.all)
+  y, z   = total(y0), total(z0)
+  x      = y + z
+  tobs   = testStatistic(y,z)
+  yhat   = [y1 - y.mu + x.mu for y1 in y.all]
+  zhat   = [z1 - z.mu + x.mu for z1 in z.all]
+  bigger = 0.0
+  for i in range(b):
+    if testStatistic(total(sampleWithReplacement(yhat)),
+                     total(sampleWithReplacement(zhat))) > tobs:
+      bigger += 1
+  return bigger / b < conf
