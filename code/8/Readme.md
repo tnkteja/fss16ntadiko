@@ -1,4 +1,4 @@
-# Homework 7 - Implement NSGAII
+# Homework 8 - Implement NSGAII
 
 ___Not w ___
 
@@ -13,9 +13,6 @@ Most of the algorithms that perform the unordered search do the mutation on the 
 
 Another set of algorithms came along that are inspired by the Genetic Algorithm, which fundamentally perform crosover and mutatio over a generation of populations. Then prune the less evloved individuals using a process called elitism. This process is called Generation , and we run this for more generation until we get a convergence on the generations. Also we no longer get a single best solution as we have multi-objectives. We look for a optimized frontier called Pareto Frontier, which is the frontier on which all objectives competing and non-competing settle for optimality.
 
-### KrallsBStopMethod
-
-We use KrallesBStop Method for early termination for the series of algorithms with GA. 
 
 ## Background
 
@@ -51,10 +48,13 @@ These algorithms are run over DTLZ line of problems namely DTLZ with 2,4,6,8 wit
 
 Same 20 baseline populations are used for a problem to run against the variants of the optimizers.
 
-Cdomloss is calculated between the first generation and the final generation. Since we have 20 baseline populations we get 20 numbers. These performance numbers are then feed to scottknott for statistical analysis.
+Cdomloss is calculated between the first generation and the final generation. Since we have 20 baseline populations we get 20 numbers. These performance numbers are then feed to scottknott for statistical analysis. 
 
 
 ## Results and Discussion
+
+We got the following scottknott results by running the problems with the two variants of the GA. For each problem we ranked the resuts with gacdom loss variant and the nsga2 variant. We find that MORE OFTEN THAN NOT GACDOMLOSS variant is performing better or equal than the NSGAII variant for the problems. 
+
 
 ```bash
 rank ,         name ,    med   ,  iqr
@@ -308,7 +308,7 @@ The solutions obtained in the final pareto frontier may be  more improvised by u
 
 * The default parameters used in the GAs are not tuned to the problems. The mutation rate, crossover and the size of populations  can be adjusted to improve the solutions on the paretofrontier.
 
-* We used KrallsBstop method to impose early stopping criteria. We can use different defaults in the implementation. We can alternatively use another approach to determine early stopping criteria, probably cdomloss from first generation
+* We used KrallsBstop method to impose early stopping criteria. We can use different defaults in the implementation. We can alternatively use another approach to determine early stopping criteria, probably cdomloss from first generation to the current generation. If the loss numbers are changing, increasing, we see improvement and push for few more genenrations. We can also use hypervolume over here.
 
 
 ## The Acknowledgments
