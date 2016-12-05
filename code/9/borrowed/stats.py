@@ -978,9 +978,9 @@ def main():
   rdivDemo( [ [k] + v for k,v in all.items() ] ) 
 
 
-if args.demo:
-  _rdivs()
-else:
-  main()
+# if args.demo:
+#   _rdivs()
+# else:
+#   main()
   
 
